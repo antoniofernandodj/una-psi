@@ -1,24 +1,80 @@
 <style>
 
-  .vermelho {
-    color: red;
-  }
-
-  /* Responsive Styles */
-  @media screen and (max-width: 767px) {
-
-  }
-
-  @media screen and (max-width: 575px) {
-
-  }
 </style>
 
 <div class="content" role="main">
 
-  <h1 class="vermelho">
-    Oi moça, tudo bem?
-  </h1>
+  <h3>Login</h3>
+  <form [formGroup]="userForm" (ngSubmit)="onLoginFormSubmit()" id="login-form">
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="login-form__email" name="email" required formControlName="email">
+      <div *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched">
+        Nome é obrigatório e precisa ter ao menos 3 caracteres.
+      </div>
+    </div>
+
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="login-form__password" name="password" required formControlName="password">
+    </div>
+
+
+    <div>
+      <label for="remember">Remember me:</label>
+      <input type="checkbox" id="login-form__remember" name="remember" formControlName="remember">
+      <button type="submit">Login</button>
+    </div>
+
+  </form>
+
+  <br /><br /><br /><br />
+
+  <h3>Register</h3>
+  <form [formGroup]="registerForm" id="register-form" (ngSubmit)="onRegisterFormSubmit()">
+
+    <div>
+      <label for="name">Name:</label>
+      <input type="text" id="register-form__name" name="name" required formControlName="name">
+      <div *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched">
+        Nome é obrigatório e precisa ter ao menos 3 caracteres.
+      </div>
+    </div>
+
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="register-form__email" name="email" required formControlName="email">
+      <div *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched">
+        Nome é obrigatório e precisa ter ao menos 3 caracteres.
+      </div>
+    </div>
+
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="register-form__password" name="password" required formControlName="password">
+    </div>
+
+    <div>
+      <label for="confirm-password">Confirm Password:</label>
+      <input type="password" id="register-form__confirm-password" name="confirmPassword" required formControlName="confirmPassword">
+    </div>
+
+    <div>
+      <label for="user-class">User Class</label>
+      <select type="checkbox" id="login-form__user-class" name="user-class" formControlName="userClass">
+        <option value="psychologist">Psychologist</option>
+        <option value="patient">Patient</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="remember">Remember me:</label>
+      <input type="checkbox" id="register-form__remember" name="remember" formControlName="remember">
+      <button type="submit">Register</button>
+    </div>
+
+
+  </form>
 </div>
 
 
