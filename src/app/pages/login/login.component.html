@@ -1,0 +1,36 @@
+
+<h3>Login</h3>
+<form [formGroup]="userForm" (ngSubmit)="onLoginFormSubmit()" id="login-form">
+  <div>
+    <label for="email">Email:</label>
+    <input
+        type="email"
+        id="login-form__email"
+        name="email"
+        required
+        formControlName="email">
+    <div *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched">
+      Nome é obrigatório e precisa ter ao menos 3 caracteres.
+    </div>
+  </div>
+
+  <div>
+    <label for="password">Password:</label>
+    <input
+        type="password"
+        id="login-form__password"
+        name="password"
+        required
+        formControlName="password">
+  </div>
+
+  <div>
+    <label for="remember">Remember me:</label>
+    <input
+        type="checkbox"
+        id="login-form__remember"
+        name="remember"
+        formControlName="remember">
+    <button type="submit">Login</button>
+  </div>
+</form>

@@ -1,0 +1,134 @@
+<style>
+
+div.content {
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.alert {
+  margin-bottom: 1rem;
+}
+
+.alert-success {
+  color: #4CAF50;
+}
+
+.alert-danger {
+  color: #FF5722;
+}
+
+</style>
+
+
+<div class="content" role="main">
+
+  <br /><br /><br /><br />
+
+  <h3>Register</h3>
+  <form [formGroup]="registerForm" id="register-form" (ngSubmit)="onRegisterFormSubmit()">
+
+    <div>
+      <label for="name">Name:</label>
+      <input
+            type="text"
+            id="register-form__name"
+            name="name"
+            required
+            formControlName="name">
+      <div *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
+        Nome é obrigatório e precisa ter ao menos 3 caracteres.
+      </div>
+    </div>
+
+    <div>
+      <label for="email">Email:</label>
+      <input
+          type="email"
+          id="register-form__email"
+          name="email"
+          required
+          formControlName="email">
+      <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+        Email é obrigatório e precisa ter ao menos 3 caracteres.
+      </div>
+    </div>
+
+    <div>
+      <label for="password">Password:</label>
+      <input
+          type="password"
+          id="register-form__password"
+          name="password"
+          required
+          formControlName="password">
+    </div>
+
+    <div>
+      <label for="confirm-password">Confirm Password:</label>
+      <input
+          type="password"
+          id="register-form__confirm-password"
+          name="confirmPassword"
+          required
+          formControlName="confirmPassword">
+    </div>
+
+    <div>
+      <label for="user-class">User Class</label>
+      <select
+          #userClassSelect
+          id="register-form__user-class"
+          name="user-class"
+          formControlName="userClass">
+        <option [value]="UserClass.PSYCHOLOGIST">Psychologist</option>
+        <option [value]="UserClass.PATIENT">Patient</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="remember">Remember me:</label>
+      <input
+          type="checkbox"
+          id="register-form__remember"
+          name="remember"
+          formControlName="remember">
+      <button type="submit">Register</button>
+    </div>
+    <ng-container *ngIf="registerForm.get('userClass')?.value === UserClass.PSYCHOLOGIST; else notPsychologist">
+      <div class="alert alert-danger">
+        Please fill in all psychologist required fields.
+      </div>
+
+
+
+      <div>
+        <label for="crp">CRP:</label>
+        <input
+            type="text"
+            id="register-form__crp"
+            name="crp"
+            required
+            formControlName="crp">
+      </div>
+
+      <div>
+        <label for="specialty">Specialty:</label>
+        <input
+            type="text"
+            id="register-form__specialty"
+            name="specialty"
+            required
+            formControlName="specialty">
+      </div>
+
+    </ng-container>
+
+    <ng-template #notPsychologist>
+      <div class="alert alert-info">
+        Please fill in all patient required fields.
+      </div>
+    </ng-template>
+
+
+  </form>
+</div>
