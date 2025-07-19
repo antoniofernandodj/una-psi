@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { AuthService, User } from "src/app/services/auth.service";
+import { StorageService } from "src/app/services/storage.service";
 
 @Component({
   selector: "app-home",
@@ -8,6 +9,9 @@ import { AuthService, User } from "src/app/services/auth.service";
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent {
-  currentUser$ = this.authService.currentUser$;
-  constructor(private authService: AuthService) {}
+  currentUser$: Observable<User | null> = this.authService.currentUser$;
+  constructor(
+    private authService: AuthService,
+    private storageService: StorageService,
+  ) {}
 }

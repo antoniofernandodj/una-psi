@@ -16,8 +16,6 @@ export class StorageService {
       localStorage.getItem(key) || sessionStorage.getItem(key);
     if (result) {
       let resultObject: StorageItem = JSON.parse(result);
-      console.log({ resultObject: JSON.stringify(resultObject) });
-      console.log({ val: resultObject.value });
       return of(resultObject.value as T);
     }
 

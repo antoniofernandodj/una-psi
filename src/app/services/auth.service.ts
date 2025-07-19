@@ -29,6 +29,7 @@ export class AuthService {
     this.currentUser = new BehaviorSubject<User | null>(null);
     this.currentUser$ = this.currentUser.asObservable();
     this.storageService.getItem<User | null>("user").subscribe((user) => {
+      console.log("user from storage:", user);
       this.currentUser.next(user);
     });
   }
@@ -104,7 +105,7 @@ export class AuthService {
     );
   }
 
-  getUser(): Observable<User | null> {
+  getCurrentUser(): Observable<User | null> {
     return this.storageService.getItem<User | null>("user");
   }
 }

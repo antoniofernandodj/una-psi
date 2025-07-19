@@ -1,20 +1,30 @@
-<style>
+<style></style>
 
-</style>
 
 <div class="content" role="main">
+
+
+
+
   <div>
     <a routerLink="/home">Home</a>
   </div>
-  <div>
-    <a routerLink="/login">Login</a>
-  </div>
-  <div>
-    <a routerLink="/signin">Signin</a>
-  </div>
-  <div>
-    <a routerLink="/logout">Logout</a>
-  </div>
+
+  <ng-container *ngIf="currentUser$ | async">
+    <div>
+      <a routerLink="/logout">Logout</a>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!(currentUser$ | async)">
+    <div>
+      <a routerLink="/login">Login</a>
+    </div>
+    <div>
+      <a routerLink="/signin">Signin</a>
+    </div>
+  </ng-container>
+
   <div>
     <a routerLink="/psychologists">Psychologists</a>
   </div>
