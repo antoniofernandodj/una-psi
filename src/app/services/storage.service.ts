@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { Observable, of } from "rxjs";
 
 type StorageItem = {
   value: any;
@@ -8,30 +9,37 @@ type StorageItem = {
   providedIn: "root",
 })
 export class StorageService {
-  storage: Storage;
-  constructor(storage: Storage) {
-    this.storage = storage;
-  }
+  constructor() {}
 
-  getItem(key: string): any | null {
-    let result: string | null = this.storage.getItem(key);
+  getItem<T>(key: string): Observable<T | null> {
+    let result: string | null =
+      localStorage.getItem(key) || sessionStorage.getItem(key);
     if (result) {
       let resultObject: StorageItem = JSON.parse(result);
-      return resultObject.value;
+      console.log({ resultObject: JSON.stringify(resultObject) });
+      console.log({ val: resultObject.value });
+      return of(resultObject.value as T);
     }
 
-    return null;
+    return of(null);
   }
 
-  setItem(key: string, value: any): void {
-    this.storage.setItem(key, JSON.stringify({ value }));
+  setItem(key: string, value: any, remember: boolean = true): Observable<void> {
+    if (remember) {
+      localStorage.setItem(key, JSON.stringify({ value }));
+    } else {
+      sessionStorage.setItem(key, JSON.stringify({ value }));
+    }
+    return of(undefined); // ou of(void 0);
   }
 
   removeItem(key: string): void {
-    this.storage.removeItem(key);
+    localStorage.removeItem(key);
+    sessionStorage.removeItem(key);
   }
 
   clear(): void {
-    this.storage.clear();
+    localStorage.clear();
+    sessionStorage.clear();
   }
 }
