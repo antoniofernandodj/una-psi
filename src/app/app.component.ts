@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { AuthService, User } from "./services/auth.service";
+import { Title } from "@angular/platform-browser";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-root",
@@ -8,8 +10,12 @@ import { AuthService, User } from "./services/auth.service";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-  title = "angular-test";
-  currentUser$ = this.authService.currentUser$;
+  private authService = inject(AuthService);
+  private titleService = inject(Title);
 
-  constructor(private authService: AuthService) {}
+  currentUser$: Observable<User | null> = this.authService.currentUser$;
+
+  ngOnInit() {
+    this.titleService.setTitle("UnaPsi");
+  }
 }

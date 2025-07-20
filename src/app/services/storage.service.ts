@@ -12,8 +12,9 @@ export class StorageService {
   constructor() {}
 
   getItem<T>(key: string): Observable<T | null> {
-    let result: string | null =
-      localStorage.getItem(key) || sessionStorage.getItem(key);
+    let r1 = localStorage.getItem(key);
+    let r2 = sessionStorage.getItem(key);
+    let result: string | null = r1 || r2;
     if (result) {
       let resultObject: StorageItem = JSON.parse(result);
       return of(resultObject.value as T);
