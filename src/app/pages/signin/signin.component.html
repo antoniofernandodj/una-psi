@@ -54,6 +54,19 @@ div.content {
     </div>
 
     <div>
+      <label for="telefone">Telefone:</label>
+      <input
+          type="tel"
+          id="register-form__telefone"
+          name="telefone"
+          required
+          formControlName="telefone">
+      <div *ngIf="registerForm.get('telefone')?.invalid && registerForm.get('telefone')?.touched">
+        Telefone é obrigatório e precisa ter ao menos 11 caracteres.
+      </div>
+    </div>
+
+    <div>
       <label for="password">Password:</label>
       <input
           type="password"

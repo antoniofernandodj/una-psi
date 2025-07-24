@@ -13,6 +13,7 @@ export type User = {
   email: string;
   password: string;
   userClass: string;
+  telefone: string;
 
   crp?: string;
   specialty?: string;
@@ -70,10 +71,11 @@ export class AuthService {
     password: string,
     userClass: string,
     remember: boolean,
+    telefone: string,
     crp?: string,
     specialty?: string,
   ): Observable<boolean> {
-    const user: User = { name, email, password, userClass };
+    const user: User = { name, email, password, userClass, telefone };
 
     if (crp) user.crp = crp;
     if (specialty) user.specialty = specialty;

@@ -22,6 +22,14 @@ export class SigninComponent {
       name: ["", [Validators.required]],
       email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required, Validators.minLength(6)]],
+      telefone: [
+        "",
+        [
+          Validators.required,
+          Validators.minLength(11),
+          Validators.maxLength(11),
+        ],
+      ],
       crp: [""],
       specialty: [""],
       confirmPassword: ["", [Validators.required, Validators.minLength(6)]],
@@ -50,12 +58,22 @@ export class SigninComponent {
       confirmPassword,
       userClass,
       remember,
+      telefone,
       crp,
       specialty,
     } = this.registerForm.value;
 
     this.authService
-      .signin(name, email, password, userClass, remember, crp, specialty)
+      .signin(
+        name,
+        email,
+        password,
+        userClass,
+        remember,
+        telefone,
+        crp,
+        specialty,
+      )
       .subscribe({
         next: (result: boolean) => {
           if (result) {
