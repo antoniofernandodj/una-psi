@@ -3,7 +3,7 @@
   <ul>
     <li *ngFor="let psychologist of psychologists$ | async">
       {{ psychologist.name }} - {{ psychologist.email }},
-      <a href="wa.me/55{{ psychologist.telefone }}">{{ psychologist.telefone }}</a>
+      <a href="/wa.me/55{{ psychologist.telefone }}">{{ psychologist.telefone }}</a>
       CRP: {{ psychologist.crp }}, Specialty: {{ psychologist.specialty }}
       <button (click)="window.alert(JSON.stringify(psychologist))">Details</button>
     </li>
