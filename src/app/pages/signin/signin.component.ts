@@ -2,7 +2,20 @@ import { Component } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthService, UserClass } from "src/app/services/auth.service";
+import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
 import { handleInvalidForm } from "../utils";
+
+export function fixedLength(length: number): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value = control.value;
+    if (value && value.length !== length) {
+      return {
+        fixedLength: { requiredLength: length, actualLength: value.length },
+      };
+    }
+    return null;
+  };
+}
 
 @Component({
   selector: "app-signin",
@@ -22,14 +35,7 @@ export class SigninComponent {
       name: ["", [Validators.required]],
       email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required, Validators.minLength(6)]],
-      telefone: [
-        "",
-        [
-          Validators.required,
-          Validators.minLength(11),
-          Validators.maxLength(11),
-        ],
-      ],
+      telefone: ["", [Validators.required, fixedLength(11)]],
       crp: [""],
       specialty: [""],
       confirmPassword: ["", [Validators.required, Validators.minLength(6)]],
