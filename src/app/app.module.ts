@@ -1,19 +1,16 @@
-import { CommonModule } from "@angular/common";
-import { NgModule } from "@angular/core";
-import { ReactiveFormsModule } from "@angular/forms";
+import { APP_INITIALIZER, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { HomeComponent } from './pages/home/home.component';
-import { LoginComponent } from './pages/login/login.component';
-import { SigninComponent } from './pages/signin/signin.component';
-import { PsychologistsComponent } from './pages/psychologists/psychologists.component';
+import { SeedService } from "./core/services/seed.service";
+import { LogoutComponent } from "./features/logout.component";
+import { SharedModule } from "./shared/shared.module";
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, SigninComponent, PsychologistsComponent],
-  imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, CommonModule],
-  providers: [],
+  declarations: [AppComponent, LogoutComponent],
+  imports: [BrowserModule, SharedModule, AppRoutingModule],
+  providers: [{ provide: APP_INITIALIZER, useFactory: (seed: SeedService) => () => seed.run(), deps: [SeedService], multi: true }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

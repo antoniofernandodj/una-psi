@@ -1,21 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
-import { AuthService, User } from "./services/auth.service";
-import { Title } from "@angular/platform-browser";
-import { Observable } from "rxjs";
+import { Component } from "@angular/core";
 
 @Component({
   selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `<router-outlet></router-outlet><app-toast-host></app-toast-host>`,
 })
-export class AppComponent {
-  private authService = inject(AuthService);
-  private titleService = inject(Title);
-
-  currentUser$: Observable<User | null> = this.authService.currentUser$;
-
-  ngOnInit() {
-    this.titleService.setTitle("UnaPsi");
-  }
-}
+export class AppComponent {}

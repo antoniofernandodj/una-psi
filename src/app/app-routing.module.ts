@@ -1,28 +1,39 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { ReactiveFormsModule } from "@angular/forms";
-import { HomeComponent } from "./pages/home/home.component";
-import { LoginComponent } from "./pages/login/login.component";
-import { SigninComponent } from "./pages/signin/signin.component";
-import { LogoutComponent } from "./pages/logout";
-import { PsychologistsComponent } from "./pages/psychologists/psychologists.component";
+import { guestGuard, homeRedirectGuard, roleGuard } from "./core/guards/role.guard";
+import { LogoutComponent } from "./features/logout.component";
+import { MainLayoutComponent } from "./shared/components/main-layout.component";
 
 const routes: Routes = [
-  // {
-  //   path: "",
-  //   redirectTo: "/home",
-  //   pathMatch: "full",
-  // },
-  //
-  { path: "home", component: HomeComponent },
-  { path: "login", component: LoginComponent },
-  { path: "signin", component: SigninComponent },
+  { path: "", pathMatch: "full", canActivate: [homeRedirectGuard], children: [] },
+  {
+    path: "",
+    canActivate: [guestGuard],
+    loadChildren: () => import("./features/auth/auth.module").then((m) => m.AuthModule),
+  },
   { path: "logout", component: LogoutComponent },
-  { path: "psychologists", component: PsychologistsComponent },
+  {
+    path: "",
+    component: MainLayoutComponent,
+    children: [
+      { path: "paciente", loadChildren: () => import("./features/patient/patient.module").then((m) => m.PatientModule) },
+      {
+        path: "psicologo",
+        canActivate: [roleGuard("psychologist")],
+        loadChildren: () => import("./features/psychologist/psychologist.module").then((m) => m.PsychologistModule),
+      },
+      {
+        path: "owner",
+        canActivate: [roleGuard("owner")],
+        loadChildren: () => import("./features/owner/owner.module").then((m) => m.OwnerModule),
+      },
+    ],
+  },
+  { path: "**", redirectTo: "" },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), ReactiveFormsModule],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

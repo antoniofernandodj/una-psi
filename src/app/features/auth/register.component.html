@@ -1,0 +1,68 @@
+<app-auth-hero
+  [wide]="true"
+  subtitle="Conectamos profissionais humanizados a pacientes em busca de acolhimento e transformação emocional."
+>
+  <div heroExtra class="mt-6">
+    <app-segmented [options]="roleOptions" [value]="role" (valueChange)="role = $any($event)"></app-segmented>
+  </div>
+
+  <app-card class="mb-8">
+    <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-10">
+      <section>
+        <app-section-title
+          [step]="1"
+          [title]="isPsychologist ? 'Dados pessoais e acesso' : 'Seus dados e acesso'"
+        ></app-section-title>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <app-input formControlName="name" label="Nome completo" icon="person" placeholder="Mariana Vasconcelos" autocomplete="name"></app-input>
+          <app-input formControlName="email" type="email" label="E-mail" icon="mail" placeholder="contato@email.com.br" autocomplete="email"></app-input>
+          <app-input
+            formControlName="phone"
+            type="tel"
+            label="Telefone / WhatsApp"
+            icon="call"
+            mask="phone"
+            placeholder="(11) 98765-4321"
+            [maxlength]="15"
+            hint="Canal para contato direto."
+          ></app-input>
+          <app-input formControlName="password" type="password" label="Criar senha forte" icon="lock" placeholder="Mínimo 8 caracteres" autocomplete="new-password">
+            <app-password-meter [value]="form.controls.password.value ?? ''"></app-password-meter>
+          </app-input>
+          <app-input formControlName="confirmPassword" type="password" label="Confirmar senha" icon="lock" placeholder="Repita a senha" autocomplete="new-password"></app-input>
+        </div>
+      </section>
+
+      <section *ngIf="isPsychologist">
+        <app-section-title [step]="2" tone="secondary" title="Atuação clínica e credenciamento">
+          <app-badge tone="tertiary" icon="verified">Auditoria CFP</app-badge>
+        </app-section-title>
+        <app-profile-fields [group]="profile" [name]="form.controls.name.value ?? ''"></app-profile-fields>
+      </section>
+
+      <div>
+        <app-checkbox formControlName="terms">
+          Concordo com os <a href="#" class="text-primary font-semibold hover:underline">Termos de Uso</a> e a
+          <a href="#" class="text-primary font-semibold hover:underline">Política de Privacidade em Saúde Mental (LGPD)</a>{{
+            isPsychologist ? ", e confirmo a veracidade dos meus dados profissionais e credenciais do CRP" : ""
+          }}.
+        </app-checkbox>
+      </div>
+
+      <div class="flex flex-col items-center gap-4">
+        <app-button type="submit" size="lg" icon="how_to_reg">
+          {{ isPsychologist ? "Concluir cadastro profissional" : "Criar minha conta" }}
+        </app-button>
+        <a routerLink="/login" class="text-body-sm text-on-surface-variant">
+          Já possui uma conta ativa? <strong class="text-primary">Fazer login</strong>
+        </a>
+      </div>
+    </form>
+  </app-card>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <app-feature-tile icon="security" title="Acolhimento seguro">Seus dados protegidos pelas diretrizes do CFP e da LGPD.</app-feature-tile>
+    <app-feature-tile icon="calendar_month" title="Contato direto">Fale com o profissional por formulário ou WhatsApp.</app-feature-tile>
+    <app-feature-tile icon="diversity_1" title="Match empático">Encontre quem trabalha com as suas demandas e abordagem preferida.</app-feature-tile>
+  </div>
+</app-auth-hero>

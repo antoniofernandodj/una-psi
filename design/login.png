@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_blank" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-secondary-fixed-variant":"#5516be","surface-bright":"#f8f9ff","outline-variant":"#e0bec4","primary-fixed":"#ffd9e0","background":"#f8f9ff","on-secondary-container":"#fffbff","surface":"#f8f9ff","on-primary-container":"#ffd5dd","primary":"#970046","on-surface":"#0d1c2f","on-tertiary-fixed":"#002114","secondary":"#6b38d4","surface-container-lowest":"#ffffff","on-background":"#0d1c2f","on-secondary-fixed":"#23005c","surface-container":"#e6eeff","surface-container-highest":"#d5e3fd","inverse-surface":"#233144","on-error":"#ffffff","outline":"#8d7075","secondary-fixed":"#e9ddff","on-tertiary-container":"#82f5c1","inverse-on-surface":"#ebf1ff","secondary-container":"#8455ef","on-primary":"#ffffff","surface-container-low":"#eff4ff","error-container":"#ffdad6","on-primary-fixed-variant":"#8f0042","error":"#ba1a1a","surface-container-high":"#dde9ff","secondary-fixed-dim":"#d0bcff","on-secondary":"#ffffff","on-tertiary":"#ffffff","tertiary-container":"#00714e","on-primary-fixed":"#3f0019","on-surface-variant":"#594046","on-error-container":"#93000a","on-tertiary-fixed-variant":"#005137","surface-tint":"#b81059","surface-dim":"#ccdbf4","tertiary-fixed":"#85f8c4","primary-container":"#be185d","tertiary":"#00563a","surface-variant":"#d5e3fd","tertiary-fixed-dim":"#68dba9","primary-fixed-dim":"#ffb1c3","inverse-primary":"#ffb1c3"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-xs":"0.25rem","margin":"3rem","space-xl":"2.5rem","space-lg":"1.5rem","space-sm":"0.5rem","gutter-mobile":"1rem","space-md":"1rem","gutter":"1.5rem","margin-mobile":"1.25rem"},"fontFamily":{"headline-lg-mobile":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"label-lg":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"],"display-hero-mobile":["Plus Jakarta Sans"],"headline-sm":["Plus Jakarta Sans"],"title-md":["Plus Jakarta Sans"],"label-md":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"display-hero":["Plus Jakarta Sans"]},"fontSize":{"headline-lg-mobile":["26px",{"lineHeight":"34px","fontWeight":"600"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-lg":["32px",{"lineHeight":"40px","fontWeight":"600"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"label-sm":["11px",{"lineHeight":"14px","fontWeight":"500"}],"label-lg":["14px",{"lineHeight":"20px","fontWeight":"600"}],"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"display-hero-mobile":["32px",{"lineHeight":"40px","fontWeight":"700"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}],"title-md":["18px",{"lineHeight":"26px","fontWeight":"600"}],"label-md":["12px",{"lineHeight":"16px","fontWeight":"600"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],"display-hero":["44px",{"lineHeight":"54px","fontWeight":"700"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface antialiased min-h-screen"><main class="w-full bg-surface min-h-screen flex flex-col justify-center items-center p-gutter"><div class="flex flex-col w-full">
+<div class="relative w-full max-w-6xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+<div class="text-center max-w-2xl mx-auto mb-8">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm mb-3 shadow-sm">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">health_and_safety</span>
+<span>Plataforma Certificada pelo CFP</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mb-2">
+        Boas-vindas ao <span class="text-primary font-bold">PsicoConecta</span>
+</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">
+        Conectamos profissionais humanizados a pacientes em busca de acolhimento e transformação emocional.
+      </p>
+<div class="inline-flex p-1.5 mt-6 rounded-full bg-surface-container shadow-inner">
+<button class="px-6 py-2.5 rounded-full font-label-lg text-label-lg transition-all text-on-surface-variant hover:text-on-surface flex items-center gap-2" id="toggle-patient" onclick="setRole('patient')" type="button">
+<span class="material-symbols-outlined text-lg">spa</span>
+          Quero fazer terapia
+        </button>
+<button class="px-6 py-2.5 rounded-full font-label-lg text-label-lg transition-all bg-surface-container-lowest text-primary shadow-sm flex items-center gap-2" id="toggle-psychologist" onclick="setRole('psychologist')" type="button">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">psychology</span>
+          Sou Psicólogo(a)
+        </button>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-2xl shadow-xl p-6 sm:p-10 mb-8 transition-all">
+<form class="space-y-10" id="psico-form" onsubmit="event.preventDefault(); handleRegistration();">
+<div>
+<div class="flex items-center gap-2 mb-6">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-primary-fixed text-primary font-bold text-sm">1</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Dados Pessoais e Acesso</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5" for="full-name">Nome Completo *</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3.5 top-3.5 text-outline text-lg">person</span>
+<input class="w-full pl-11 pr-4 py-3 bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary placeholder:text-outline-variant" id="full-name" placeholder="Dra. Mariana Vasconcelos" required="" type="text"/>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5" for="email">E-mail Profissional *</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3.5 top-3.5 text-outline text-lg">mail</span>
+<input class="w-full pl-11 pr-4 py-3 bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary placeholder:text-outline-variant" id="email" placeholder="contato@psi.mariana.com.br" required="" type="email"/>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5" for="phone">Telefone / WhatsApp Profissional *</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3.5 top-3.5 text-outline text-lg">call</span>
+<input class="w-full pl-11 pr-4 py-3 bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary placeholder:text-outline-variant" id="phone" maxlength="15" oninput="maskPhone(this)" placeholder="(11) 98765-4321" required="" type="text"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-1 block">Canal para contato direto e agendamento humanizado.</span>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5" for="password">Criar Senha Forte *</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3.5 top-3.5 text-outline text-lg">lock</span>
+<input class="w-full pl-11 pr-11 py-3 bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary placeholder:text-outline-variant" id="password" oninput="checkPasswordStrength(this.value)" placeholder="Mínimo 8 caracteres" required="" type="password"/>
+<button class="absolute right-3.5 top-3.5 text-outline hover:text-on-surface" onclick="togglePasswordVisibility()" type="button">
+<span class="material-symbols-outlined text-lg" id="pw-visibility-icon">visibility</span>
+</button>
+</div>
+<div class="mt-2 space-y-1">
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+<div class="h-full w-0 transition-all duration-300 rounded-full bg-outline" id="password-meter"></div>
+</div>
+<div class="flex justify-between items-center text-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant" id="password-label">Força: Digite uma senha</span>
+<span class="font-label-sm text-label-sm text-outline">8+ dígitos, letras e números</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="transition-all duration-300" id="psychologist-section">
+<div class="flex items-center gap-2 mb-6">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-secondary-fixed text-secondary font-bold text-sm">2</span>
+<div class="flex items-center gap-3">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Atuação Clínica &amp; Credenciamento</h2>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">verified</span>
+                Auditoria CFP
+              </span>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<div class="lg:col-span-4 bg-surface-container-low p-6 rounded-2xl flex flex-col items-center text-center">
+<span class="font-label-md text-label-md text-on-surface mb-3">Foto Profissional Humanizada</span>
+<div class="relative group cursor-pointer" onclick="document.getElementById('avatar-input').click()">
+<div class="w-28 h-28 rounded-full shadow-md overflow-hidden bg-surface-container flex items-center justify-center relative" id="avatar-preview-box">
+<img class="w-full h-full object-cover" data-alt="Foto acolhedora em close-up de uma psicóloga brasileira sorrindo com ternura e empatia, fundo neutro em tons de lavanda e iluminação suave e natural." id="avatar-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUdy8FnKaVorz2ftomzAj8aUJ3X0qy0gI57rQej6UzR2Xa-vsxNWrEz5Ia8K3TftWzmSDlHGdxFxrMHet11yvn_VgPXY84hTDDPkyG_8Fs42Rpljk5DsHSCSev2yfLUIuGHaD1mgKLO5rRmexr6i0X5WcOj4W4-joNNMaAsrjOY_pmUSXu6k6CmtU4Z2DCiwBh9du3vyMfuIk2EOCsWbxjMvE7uKRpLCPRxSaWwWnP-cK-xfACSp8B"/>
+<div class="absolute inset-0 bg-inverse-surface/40 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-on-primary">
+<span class="material-symbols-outlined text-2xl">photo_camera</span>
+<span class="font-label-sm text-label-sm">Alterar</span>
+</div>
+</div>
+<div class="absolute bottom-1 right-1 w-7 h-7 bg-tertiary text-on-tertiary rounded-full flex items-center justify-center shadow">
+<span class="material-symbols-outlined text-sm">add</span>
+</div>
+</div>
+<input accept="image/*" class="hidden" id="avatar-input" onchange="previewAvatar(event)" type="file"/>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-3">
+                Adicione uma imagem nítida com expressão empática. Fotos receptivas aumentam o agendamento em 64%.
+              </p>
+<div class="mt-6 w-full text-left space-y-3">
+<div>
+<div class="flex items-center justify-between mb-1">
+<label class="font-label-md text-label-md text-on-surface" for="crp-input">Registro CRP *</label>
+<span class="hidden items-center gap-1 text-xs font-label-sm px-2 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed" id="crp-status-badge">
+<span class="material-symbols-outlined text-xs">check_circle</span>
+                      Válido
+                    </span>
+</div>
+<div class="relative">
+<input class="w-full px-3.5 py-2.5 bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary uppercase" id="crp-input" maxlength="9" oninput="validateCRP(this)" placeholder="06/123456" required="" type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-outline text-lg">badge</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-1 block">Região / Número (ex: 06/123456 para SP)</span>
+</div>
+<div>
+<label class="font-label-md text-label-md text-on-surface block mb-1" for="session-fee">Valor da Sessão (R$)</label>
+<div class="relative">
+<span class="absolute left-3.5 top-2.5 text-on-surface-variant font-label-md">R$</span>
+<input class="w-full pl-10 pr-3.5 py-2.5 bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary" id="session-fee" placeholder="180,00" type="text"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-1 block leading-tight">
+                    (Opcional - deixe em branco caso prefira combinar diretamente ou ofereça valor social)
+                  </span>
+</div>
+</div>
+</div>
+<div class="lg:col-span-8 space-y-6">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1">Abordagens Teóricas Principais</label>
+<span class="font-body-sm text-body-sm text-on-surface-variant block mb-2.5">Selecione até 3 linhas mestras da sua prática clínica:</span>
+<div class="flex flex-wrap gap-2" id="theoretical-approaches">
+<button class="approach-chip px-3.5 py-1.5 rounded-full font-label-md text-label-md bg-surface-container text-on-surface hover:bg-secondary-fixed transition-colors" onclick="toggleApproach(this)" type="button">
+                    TCC (Cognitivo-Comportamental)
+                  </button>
+<button class="approach-chip px-3.5 py-1.5 rounded-full font-label-md text-label-md bg-secondary-fixed text-on-secondary-fixed shadow-sm" onclick="toggleApproach(this)" type="button">
+                    Psicanálise
+                  </button>
+<button class="approach-chip px-3.5 py-1.5 rounded-full font-label-md text-label-md bg-surface-container text-on-surface hover:bg-secondary-fixed transition-colors" onclick="toggleApproach(this)" type="button">
+                    Fenomenologia Existencial
+                  </button>
+<button class="approach-chip px-3.5 py-1.5 rounded-full font-label-md text-label-md bg-surface-container text-on-surface hover:bg-secondary-fixed transition-colors" onclick="toggleApproach(this)" type="button">
+                    Gestalt-terapia
+                  </button>
+<button class="approach-chip px-3.5 py-1.5 rounded-full font-label-md text-label-md bg-surface-container text-on-surface hover:bg-secondary-fixed transition-colors" onclick="toggleApproach(this)" type="button">
+                    Humanista
+                  </button>
+<button class="approach-chip px-3.5 py-1.5 rounded-full font-label-md text-label-md bg-surface-container text-on-surface hover:bg-secondary-fixed transition-colors" onclick="toggleApproach(this)" type="button">
+                    Terapia de Aceitação e Compromisso (ACT)
+                  </button>
+<button class="approach-chip px-3.5 py-1.5 rounded-full font-label-md text-label-md bg-surface-container text-on-surface hover:bg-secondary-fixed transition-colors" onclick="toggleApproach(this)" type="button">
+                    Sistêmica / Familiar
+                  </button>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1">Especialidades e Demandas Clínicas</label>
+<div class="relative mb-3">
+<span class="material-symbols-outlined absolute left-3.5 top-3 text-outline text-lg">search</span>
+<input class="w-full pl-11 pr-4 py-2.5 bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary placeholder:text-outline" id="specialty-search" onkeyup="filterSpecialties(this.value)" placeholder="Buscar por tema (ex: Ansiedade, Luto, TDAH, Burnout...)" type="text"/>
+</div>
+<div class="p-3 bg-surface-container-low rounded-xl mb-3">
+<span class="font-label-sm text-label-sm text-on-surface-variant block mb-2">Demandas Selecionadas:</span>
+<div class="flex flex-wrap gap-1.5 min-h-[32px]" id="selected-tags">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm">
+                      Ansiedade Generalizada
+                      <button class="hover:opacity-70" onclick="removeTag(this)" type="button"><span class="material-symbols-outlined text-xs">close</span></button>
+</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm">
+                      Burnout &amp; Estresse Profissional
+                      <button class="hover:opacity-70" onclick="removeTag(this)" type="button"><span class="material-symbols-outlined text-xs">close</span></button>
+</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm">
+                      Autoestima &amp; Insegurança
+                      <button class="hover:opacity-70" onclick="removeTag(this)" type="button"><span class="material-symbols-outlined text-xs">close</span></button>
+</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-1.5 max-h-36 overflow-y-auto pr-1" id="specialties-catalogue">
+<button class="specialty-btn px-2.5 py-1 rounded-lg text-xs font-label-sm bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" onclick="addTag('Depressão')" type="button">+ Depressão</button>
+<button class="specialty-btn px-2.5 py-1 rounded-lg text-xs font-label-sm bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" onclick="addTag('TDAH em Adultos')" type="button">+ TDAH em Adultos</button>
+<button class="specialty-btn px-2.5 py-1 rounded-lg text-xs font-label-sm bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" onclick="addTag('Luto e Perdas')" type="button">+ Luto e Perdas</button>
+<button class="specialty-btn px-2.5 py-1 rounded-lg text-xs font-label-sm bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" onclick="addTag('Síndrome do Pânico')" type="button">+ Síndrome do Pânico</button>
+<button class="specialty-btn px-2.5 py-1 rounded-lg text-xs font-label-sm bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" onclick="addTag('Conflitos de Relacionamento')" type="button">+ Conflitos de Relacionamento</button>
+<button class="specialty-btn px-2.5 py-1 rounded-lg text-xs font-label-sm bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" onclick="addTag('Transição de Carreira')" type="button">+ Transição de Carreira</button>
+<button class="specialty-btn px-2.5 py-1 rounded-lg text-xs font-label-sm bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" onclick="addTag('Trauma e TEPT')" type="button">+ Trauma e TEPT</button>
+<button class="specialty-btn px-2.5 py-1 rounded-lg text-xs font-label-sm bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" onclick="addTag('Transtornos Alimentares')" type="button">+ Transtornos Alimentares</button>
+<button class="specialty-btn px-2.5 py-1 rounded-lg text-xs font-label-sm bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" onclick="addTag('Fobia Social')" type="button">+ Fobia Social</button>
+<button class="specialty-btn px-2.5 py-1 rounded-lg text-xs font-label-sm bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" onclick="addTag('Parentalidade Positiva')" type="button">+ Parentalidade Positiva</button>
+<button class="specialty-btn px-2.5 py-1 rounded-lg text-xs font-label-sm bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" onclick="addTag('Comunidade LGBTQIA+')" type="button">+ Comunidade LGBTQIA+</button>
+<button class="specialty-btn px-2.5 py-1 rounded-lg text-xs font-label-sm bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" onclick="addTag('Insônia e Sono')" type="button">+ Insônia e Sono</button>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-1">
+<label class="font-label-md text-label-md text-on-surface" for="bio">Apresentação Pessoal / Mini-currículo Humanizado</label>
+<span class="font-label-sm text-label-sm text-on-surface-variant" id="bio-counter">0 / 600</span>
+</div>
+<textarea class="w-full p-3.5 bg-surface-container-lowest text-on-surface font-body-sm text-body-sm rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary placeholder:text-outline-variant" id="bio" maxlength="600" oninput="updateBioCounter(this)" placeholder="Conte de maneira calorosa sobre seu propósito terapêutico, formação continuada e como você acolhe os pacientes em suas primeiras sessões..." rows="3"></textarea>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-6">
+<h3 class="font-title-md text-title-md text-on-surface mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-xl">share</span>
+              Canais de Contato &amp; Redes Sociais
+            </h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-3 text-tertiary text-lg">chat</span>
+<input class="w-full pl-10 pr-3 py-2.5 bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary" placeholder="WhatsApp (link ou número)" type="text"/>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-3 text-primary text-lg">photo_camera</span>
+<input class="w-full pl-10 pr-3 py-2.5 bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary" placeholder="Instagram (@seu.perfil)" type="text"/>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-3 text-secondary text-lg">work</span>
+<input class="w-full pl-10 pr-3 py-2.5 bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary" placeholder="LinkedIn (URL do perfil)" type="text"/>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-3 text-error text-lg">smart_display</span>
+<input class="w-full pl-10 pr-3 py-2.5 bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary" placeholder="Canal do YouTube" type="text"/>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-3 text-on-surface-variant text-lg">menu_book</span>
+<input class="w-full pl-10 pr-3 py-2.5 bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary" placeholder="Substack / Artigos / Blog" type="text"/>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-3 text-outline text-lg">link</span>
+<input class="w-full pl-10 pr-3 py-2.5 bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary" placeholder="Site próprio ou outros links" type="text"/>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 rounded-xl bg-surface-container-low flex items-start gap-3">
+<input class="mt-1 h-4 w-4 rounded text-primary focus:ring-primary accent-primary" id="terms-agree" required="" type="checkbox"/>
+<label class="font-body-sm text-body-sm text-on-surface" for="terms-agree">
+            Concordo com os <a class="text-primary font-semibold underline" href="#">Termos de Uso</a> e a <a class="text-primary font-semibold underline" href="#">Política de Privacidade em Saúde Mental (LGPD)</a>, e confirmo a veracidade de meus dados profissionais e credenciais do CRP.
+          </label>
+</div>
+<div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4">
+<button class="w-full sm:w-auto px-8 py-3.5 bg-primary-container text-on-primary hover:opacity-95 font-label-lg text-label-lg rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 transform active:scale-95" id="cta-button" type="submit">
+<span class="material-symbols-outlined text-lg">how_to_reg</span>
+<span>Concluir Cadastro Profissional</span>
+</button>
+<a class="font-label-lg text-label-lg text-secondary hover:text-on-secondary-fixed transition-colors flex items-center gap-1.5 py-2" href="#">
+<span>Já possui uma conta ativa?</span>
+<strong class="underline">Fazer Login</strong>
+</a>
+</div>
+</form>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+<div class="p-5 rounded-2xl bg-surface-container-lowest shadow-sm flex items-start gap-3.5">
+<div class="w-10 h-10 rounded-xl bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed shrink-0">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">security</span>
+</div>
+<div>
+<h4 class="font-title-md text-title-md text-on-surface mb-1">Acolhimento Seguro</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Criptografia ponta-a-ponta em todas as sessões e dados protegidos pelas diretrizes do CFP.</p>
+</div>
+</div>
+<div class="p-5 rounded-2xl bg-surface-container-lowest shadow-sm flex items-start gap-3.5">
+<div class="w-10 h-10 rounded-xl bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed shrink-0">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+</div>
+<div>
+<h4 class="font-title-md text-title-md text-on-surface mb-1">Agenda Inteligente</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Sincronização com Google Agenda e lembretes automáticos via WhatsApp aos pacientes.</p>
+</div>
+</div>
+<div class="p-5 rounded-2xl bg-surface-container-lowest shadow-sm flex items-start gap-3.5">
+<div class="w-10 h-10 rounded-xl bg-primary-fixed flex items-center justify-center text-on-primary-fixed shrink-0">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">diversity_1</span>
+</div>
+<div>
+<h4 class="font-title-md text-title-md text-on-surface mb-1">Match Empático</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Algoritmo clínico humanizado que conecta seus pilares teóricos às dores reais das pessoas.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  let currentRole = 'psychologist';
+
+  function setRole(role) {
+    currentRole = role;
+    const btnPatient = document.getElementById('toggle-patient');
+    const btnPsychologist = document.getElementById('toggle-psychologist');
+    const psychSection = document.getElementById('psychologist-section');
+    const ctaButton = document.getElementById('cta-button');
+
+    if (role === 'patient') {
+      btnPatient.className = 'px-6 py-2.5 rounded-full font-label-lg text-label-lg transition-all bg-surface-container-lowest text-primary shadow-sm flex items-center gap-2';
+      btnPsychologist.className = 'px-6 py-2.5 rounded-full font-label-lg text-label-lg transition-all text-on-surface-variant hover:text-on-surface flex items-center gap-2';
+      psychSection.classList.add('hidden');
+      ctaButton.innerHTML = '<span class="material-symbols-outlined text-lg">favorite</span><span>Iniciar Minha Jornada Terapêutica</span>';
+    } else {
+      btnPsychologist.className = 'px-6 py-2.5 rounded-full font-label-lg text-label-lg transition-all bg-surface-container-lowest text-primary shadow-sm flex items-center gap-2';
+      btnPatient.className = 'px-6 py-2.5 rounded-full font-label-lg text-label-lg transition-all text-on-surface-variant hover:text-on-surface flex items-center gap-2';
+      psychSection.classList.remove('hidden');
+      ctaButton.innerHTML = '<span class="material-symbols-outlined text-lg">how_to_reg</span><span>Concluir Cadastro Profissional</span>';
+    }
+  }
+
+  function maskPhone(input) {
+    let value = input.value.replace(/\D/g, '');
+    if (value.length > 11) value = value.substring(0, 11);
+    
+    if (value.length > 6) {
+      input.value = `(${value.substring(0, 2)}) ${value.substring(2, 7)}-${value.substring(7)}`;
+    } else if (value.length > 2) {
+      input.value = `(${value.substring(0, 2)}) ${value.substring(2)}`;
+    } else if (value.length > 0) {
+      input.value = `(${value}`;
+    } else {
+      input.value = '';
+    }
+  }
+
+  function validateCRP(input) {
+    let value = input.value.replace(/[^0-9]/g, '');
+    if (value.length > 8) value = value.substring(0, 8);
+    
+    if (value.length > 2) {
+      input.value = `${value.substring(0, 2)}/${value.substring(2)}`;
+    } else {
+      input.value = value;
+    }
+
+    const badge = document.getElementById('crp-status-badge');
+    if (value.length >= 7) {
+      badge.classList.remove('hidden');
+      badge.classList.add('inline-flex');
+    } else {
+      badge.classList.add('hidden');
+      badge.classList.remove('inline-flex');
+    }
+  }
+
+  function checkPasswordStrength(password) {
+    const meter = document.getElementById('password-meter');
+    const label = document.getElementById('password-label');
+    
+    let strength = 0;
+    if (password.length >= 8) strength += 25;
+    if (/[A-Z]/.test(password)) strength += 25;
+    if (/[0-9]/.test(password)) strength += 25;
+    if (/[^A-Za-z0-9]/.test(password)) strength += 25;
+
+    meter.style.width = strength + '%';
+
+    if (strength === 0) {
+      meter.className = 'h-full transition-all duration-300 rounded-full bg-outline';
+      label.innerText = 'Força: Digite uma senha';
+    } else if (strength <= 25) {
+      meter.className = 'h-full transition-all duration-300 rounded-full bg-error';
+      label.innerText = 'Força: Muito fraca';
+    } else if (strength <= 50) {
+      meter.className = 'h-full transition-all duration-300 rounded-full bg-secondary-container';
+      label.innerText = 'Força: Razoável';
+    } else if (strength <= 75) {
+      meter.className = 'h-full transition-all duration-300 rounded-full bg-secondary';
+      label.innerText = 'Força: Boa';
+    } else {
+      meter.className = 'h-full transition-all duration-300 rounded-full bg-tertiary';
+      label.innerText = 'Força: Excelente e segura!';
+    }
+  }
+
+  function togglePasswordVisibility() {
+    const pwInput = document.getElementById('password');
+    const icon = document.getElementById('pw-visibility-icon');
+    if (pwInput.type === 'password') {
+      pwInput.type = 'text';
+      icon.innerText = 'visibility_off';
+    } else {
+      pwInput.type = 'password';
+      icon.innerText = 'visibility';
+    }
+  }
+
+  function previewAvatar(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('avatar-img').src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  function toggleApproach(button) {
+    if (button.classList.contains('bg-secondary-fixed')) {
+      button.classList.remove('bg-secondary-fixed', 'text-on-secondary-fixed', 'shadow-sm');
+      button.classList.add('bg-surface-container', 'text-on-surface');
+    } else {
+      button.classList.remove('bg-surface-container', 'text-on-surface');
+      button.classList.add('bg-secondary-fixed', 'text-on-secondary-fixed', 'shadow-sm');
+    }
+  }
+
+  function addTag(name) {
+    const container = document.getElementById('selected-tags');
+    const existing = Array.from(container.children).some(chip => chip.textContent.includes(name));
+    if (existing) return;
+
+    const span = document.createElement('span');
+    span.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm';
+    span.innerHTML = `${name} <button type="button" onclick="removeTag(this)" class="hover:opacity-70"><span class="material-symbols-outlined text-xs">close</span></button>`;
+    container.appendChild(span);
+  }
+
+  function removeTag(button) {
+    button.parentElement.remove();
+  }
+
+  function filterSpecialties(query) {
+    const filter = query.toLowerCase();
+    const buttons = document.querySelectorAll('.specialty-btn');
+    buttons.forEach(btn => {
+      const text = btn.innerText.toLowerCase();
+      if (text.includes(filter)) {
+        btn.style.display = 'inline-flex';
+      } else {
+        btn.style.display = 'none';
+      }
+    });
+  }
+
+  function updateBioCounter(textarea) {
+    const counter = document.getElementById('bio-counter');
+    counter.innerText = `${textarea.value.length} / 600`;
+  }
+
+  function handleRegistration() {
+    const btn = document.getElementById('cta-button');
+    const originalText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="material-symbols-outlined animate-spin text-lg">progress_activity</span><span>Validando Credenciais...</span>';
+    
+    setTimeout(() => {
+      btn.innerHTML = '<span class="material-symbols-outlined text-lg">check_circle</span><span>Cadastro Concluído com Sucesso!</span>';
+      btn.classList.remove('bg-primary-container');
+      btn.classList.add('bg-tertiary-container');
+    }, 1200);
+  }
+</script></main></body></html>
