@@ -54,25 +54,25 @@
 }
 
 :root[data-theme="blue"] {
-  --c-primary: 15 76 154;
-  --c-primary-container: 29 111 214;
-  --c-on-primary-container: 214 230 255;
-  --c-primary-fixed: 214 227 255;
-  --c-primary-fixed-dim: 169 199 255;
-  --c-on-primary-fixed: 0 27 62;
-  --c-on-primary-fixed-variant: 0 69 143;
-  --c-inverse-primary: 169 199 255;
-  --c-surface-tint: 42 108 198;
-  --c-secondary: 10 114 168;
-  --c-secondary-container: 43 150 214;
-  --c-on-secondary-container: 255 255 255;
-  --c-secondary-fixed: 201 230 255;
-  --c-secondary-fixed-dim: 141 205 255;
-  --c-on-secondary-fixed: 0 30 48;
-  --c-on-secondary-fixed-variant: 0 75 112;
-  --c-outline: 111 122 138;
-  --c-outline-variant: 195 202 214;
-  --c-on-surface-variant: 65 74 88;
+  --c-primary: 22 137 214;
+  --c-primary-container: 29 161 242;
+  --c-on-primary-container: 255 255 255;
+  --c-primary-fixed: 217 238 252;
+  --c-primary-fixed-dim: 168 216 248;
+  --c-on-primary-fixed: 6 42 68;
+  --c-on-primary-fixed-variant: 15 95 150;
+  --c-inverse-primary: 168 216 248;
+  --c-surface-tint: 29 161 242;
+  --c-secondary: 42 147 201;
+  --c-secondary-container: 94 192 234;
+  --c-on-secondary-container: 4 48 63;
+  --c-secondary-fixed: 223 243 252;
+  --c-secondary-fixed-dim: 166 220 245;
+  --c-on-secondary-fixed: 4 48 63;
+  --c-on-secondary-fixed-variant: 10 95 128;
+  --c-outline: 117 144 166;
+  --c-outline-variant: 198 220 236;
+  --c-on-surface-variant: 63 84 104;
 }
 
 @layer base {

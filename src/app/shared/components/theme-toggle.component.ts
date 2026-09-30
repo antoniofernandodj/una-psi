@@ -21,7 +21,7 @@ import { Theme, ThemeService } from "../../core/services/theme.service";
 export class ThemeToggleComponent {
   options: { id: Theme; label: string; color: string }[] = [
     { id: "rose", label: "Rosa", color: "#be185d" },
-    { id: "blue", label: "Azul", color: "#1d6fd6" },
+    { id: "blue", label: "Azul", color: "#1da1f2" },
   ];
   constructor(public theme: ThemeService) {}
 }
