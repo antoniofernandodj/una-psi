@@ -20,6 +20,7 @@ import { Theme, ThemeService } from "../../core/services/theme.service";
 })
 export class ThemeToggleComponent {
   options: { id: Theme; label: string; color: string }[] = [
+    { id: "una", label: "Una", color: "linear-gradient(135deg,#152A40 50%,#DE7F69 50%)" },
     { id: "rose", label: "Rosa", color: "#be185d" },
     { id: "blue", label: "Azul", color: "#1da1f2" },
   ];

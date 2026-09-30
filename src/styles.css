@@ -75,6 +75,53 @@
   --c-on-surface-variant: 63 84 104;
 }
 
+/* Paleta da marca: terracota, salmão, creme, azul-marinho e azul. */
+:root[data-theme="una"] {
+  --c-background: 255 226 206;
+  --c-surface: 255 228 210;
+  --c-surface-bright: 255 235 221;
+  --c-surface-dim: 233 165 142;
+  --c-surface-variant: 243 178 154;
+  --c-surface-tint: 222 127 105;
+  --c-surface-container-lowest: 255 244 236;
+  --c-surface-container-low: 255 216 196;
+  --c-surface-container: 255 205 182;
+  --c-surface-container-high: 249 191 166;
+  --c-surface-container-highest: 243 178 154;
+  --c-on-surface: 21 42 64;
+  --c-on-background: 21 42 64;
+  --c-on-surface-variant: 63 74 94;
+  --c-outline: 140 112 120;
+  --c-outline-variant: 227 176 154;
+  --c-inverse-surface: 21 42 64;
+  --c-inverse-on-surface: 255 226 206;
+  --c-inverse-primary: 255 185 166;
+  --c-primary: 21 42 64;
+  --c-on-primary: 255 244 236;
+  --c-primary-container: 34 63 94;
+  --c-on-primary-container: 255 226 206;
+  --c-primary-fixed: 255 185 166;
+  --c-primary-fixed-dim: 245 155 132;
+  --c-on-primary-fixed: 21 42 64;
+  --c-on-primary-fixed-variant: 58 76 102;
+  --c-secondary: 68 127 183;
+  --c-on-secondary: 255 255 255;
+  --c-secondary-container: 106 155 203;
+  --c-on-secondary-container: 15 42 69;
+  --c-secondary-fixed: 211 227 243;
+  --c-secondary-fixed-dim: 156 191 224;
+  --c-on-secondary-fixed: 15 42 69;
+  --c-on-secondary-fixed-variant: 45 92 140;
+  --c-tertiary: 180 83 62;
+  --c-on-tertiary: 255 255 255;
+  --c-tertiary-container: 222 127 105;
+  --c-on-tertiary-container: 21 42 64;
+  --c-tertiary-fixed: 255 185 166;
+  --c-tertiary-fixed-dim: 245 155 132;
+  --c-on-tertiary-fixed: 58 18 8;
+  --c-on-tertiary-fixed-variant: 122 46 28;
+}
+
 @layer base {
   html, body { margin: 0; padding: 0; }
   body { @apply bg-surface font-body-md text-body-md text-on-surface antialiased min-h-screen; }
