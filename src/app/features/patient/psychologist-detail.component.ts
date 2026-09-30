@@ -14,13 +14,13 @@ const TRUST_POINTS = [
   selector: "app-psychologist-detail",
   template: `
     <app-card [padding]="false">
-      <div class="h-24 sm:h-36 rounded-t-2xl overflow-hidden bg-gradient-to-r from-primary-fixed via-secondary-fixed to-tertiary-fixed">
+      <div class="h-[110px] sm:h-[166px] rounded-t-2xl overflow-hidden bg-gradient-to-r from-primary-fixed via-secondary-fixed to-tertiary-fixed">
         <img *ngIf="view.profile.cover" [src]="view.profile.cover" [alt]="'Foto de fundo de ' + view.user.name" class="w-full h-full object-cover" />
       </div>
-      <div class="p-5 sm:p-8 -mt-12 space-y-8">
+      <div class="p-5 sm:p-8 -mt-14 space-y-8">
         <header class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div class="flex items-end gap-4">
-            <app-avatar class="ring-4 ring-surface-container-lowest rounded-full" [src]="view.profile.photo" [name]="view.user.name" [size]="96"></app-avatar>
+            <app-avatar class="ring-4 ring-surface-container-lowest rounded-full" [src]="view.profile.photo" [name]="view.user.name" [size]="110"></app-avatar>
             <div>
               <app-badge tone="tertiary" icon="verified_user">CRP {{ view.profile.crp }}</app-badge>
               <h1 class="text-headline-md text-on-surface">{{ view.user.name }}</h1>
