@@ -24,6 +24,8 @@ export interface PsychologistProfile extends Entity {
   id: string;
   crp: string;
   photo?: string;
+  /** foto de fundo (capa) do perfil */
+  cover?: string;
   approachIds: string[];
   specialtyIds: string[];
   sessionFee?: number;

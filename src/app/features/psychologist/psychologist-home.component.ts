@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
-import { combineLatest, filter, map, switchMap } from "rxjs";
+import { combineLatest, filter, map, of, switchMap } from "rxjs";
+import { ContactRequest } from "../../core/models";
 import { AuthService } from "../../core/services/auth.service";
 import { PsychologistsService } from "../../core/services/psychologists.service";
 import { RequestsService } from "../../core/services/requests.service";
@@ -9,8 +10,11 @@ import { TabItem } from "../../shared/components/tabs.component";
   selector: "app-psychologist-home",
   template: `
     <div *ngIf="vm$ | async as vm" class="space-y-8">
-      <app-card>
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-5">
+      <app-card [padding]="false">
+        <div *ngIf="vm.view.profile.cover" class="h-28 sm:h-36 rounded-t-2xl overflow-hidden">
+          <img [src]="vm.view.profile.cover" alt="Foto de fundo do perfil" class="w-full h-full object-cover" />
+        </div>
+        <div class="p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-5">
           <div class="flex items-center gap-4">
             <app-avatar [src]="vm.view.profile.photo" [name]="vm.view.user.name" [size]="72" [online]="true"></app-avatar>
             <div>
@@ -53,7 +57,9 @@ export class PsychologistHomeComponent {
 
   vm$ = this.auth.currentUser$.pipe(
     switchMap((user) =>
-      combineLatest([this.psychologists.view$(user!.id), this.requestsService.forPsychologist$(user!.id)]),
+      user
+        ? combineLatest([this.psychologists.view$(user.id), this.requestsService.forPsychologist$(user.id)])
+        : of([undefined, []] as [undefined, ContactRequest[]]), // sessão encerrada (ex.: perfil apagado)
     ),
     filter(([view]) => !!view),
     map(([view, requests]) => {

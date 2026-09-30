@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, combineLatest, map, Observable } from "rxjs";
 import { PsychologistProfile, Role, User } from "../models";
-import { ProfilesStore, UsersStore } from "./stores";
+import { ProfilesStore, RequestsStore, UsersStore } from "./stores";
 import { StorageService } from "./storage.service";
 
 export type RegisterData = Omit<User, "id" | "createdAt"> & {
@@ -21,6 +21,7 @@ export class AuthService {
     private storage: StorageService,
     private users: UsersStore,
     private profiles: ProfilesStore,
+    private requests: RequestsStore,
   ) {}
 
   get currentUser(): User | null {
@@ -53,6 +54,16 @@ export class AuthService {
   logout(): void {
     this.storage.remove(this.SESSION_KEY);
     this.sessionId$.next(null);
+  }
+
+  /** Apaga a conta do usuário logado, seu perfil público e as solicitações recebidas. */
+  deleteAccount(): void {
+    const user = this.currentUser;
+    if (!user || user.role === "owner") return;
+    this.logout();
+    this.profiles.remove(user.id);
+    this.requests.removeWhere((r) => r.psychologistId === user.id);
+    this.users.remove(user.id);
   }
 
   updateUser(patch: Partial<Pick<User, "name" | "phone">>): void {

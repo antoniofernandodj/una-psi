@@ -10,6 +10,11 @@ import { SOCIALS } from "../constants";
   selector: "app-profile-fields",
   template: `
     <div [formGroup]="group" class="space-y-8">
+      <app-cover-upload
+        formControlName="cover"
+        label="Foto de fundo do perfil"
+        hint="Aparece no topo do seu perfil público. Proporção 3:1 — você poderá reposicionar antes de salvar."
+      ></app-cover-upload>
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         <div class="lg:col-span-4 bg-surface-container-low p-6 rounded-2xl space-y-6">
           <app-photo-upload
@@ -67,7 +72,8 @@ import { SOCIALS } from "../constants";
           <app-input
             *ngFor="let s of socials"
             [formControlName]="s.key"
-            [icon]="s.icon"
+            [icon]="s.brand ? undefined : s.icon"
+            [brand]="s.brand ? s.key : undefined"
             [placeholder]="s.placeholder"
             [type]="s.key === 'whatsapp' ? 'tel' : 'text'"
             [mask]="s.key === 'whatsapp' ? 'phone' : undefined"

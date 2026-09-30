@@ -9,25 +9,12 @@ export const initials = (name: string) =>
     .map((p) => p[0].toUpperCase())
     .join("");
 
-/** Redimensiona a imagem escolhida para caber no localStorage. */
-export function fileToDataUrl(file: File, size = 400): Promise<string> {
+/** Lê o arquivo como data URL (o recorte/redimensionamento é feito no image-cropper). */
+export function readFileAsDataUrl(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onerror = reject;
-    reader.onload = () => {
-      const img = new Image();
-      img.onerror = reject;
-      img.onload = () => {
-        const side = Math.min(img.width, img.height);
-        const canvas = document.createElement("canvas");
-        canvas.width = canvas.height = Math.min(size, side);
-        canvas
-          .getContext("2d")!
-          .drawImage(img, (img.width - side) / 2, (img.height - side) / 2, side, side, 0, 0, canvas.width, canvas.height);
-        resolve(canvas.toDataURL("image/jpeg", 0.85));
-      };
-      img.src = reader.result as string;
-    };
+    reader.onload = () => resolve(reader.result as string);
     reader.readAsDataURL(file);
   });
 }

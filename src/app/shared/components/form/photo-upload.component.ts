@@ -1,6 +1,6 @@
 import { Component, Input, Optional, Self } from "@angular/core";
 import { NgControl } from "@angular/forms";
-import { fileToDataUrl } from "../../../core/utils/misc";
+import { readFileAsDataUrl } from "../../../core/utils/misc";
 import { ToastService } from "../../../core/services/toast.service";
 import { FormControlBase } from "./form-control-base";
 
@@ -21,12 +21,25 @@ import { FormControlBase } from "./form-control-base";
       </button>
       <input #file type="file" accept="image/*" class="hidden" (change)="pick($event)" />
       <p class="text-body-sm text-on-surface-variant">{{ hint }}</p>
-      <app-button *ngIf="value" variant="ghost" size="sm" icon="delete" (click)="update(undefined); touch()">Remover foto</app-button>
+      <div *ngIf="value" class="flex flex-wrap justify-center gap-1">
+        <app-button variant="ghost" size="sm" icon="crop" (click)="cropSrc = value!">Reposicionar</app-button>
+        <app-button variant="ghost" size="sm" icon="delete" (click)="update(undefined); touch()">Remover</app-button>
+      </div>
     </div>
+    <app-image-cropper
+      [src]="cropSrc"
+      title="Ajustar foto de perfil"
+      [aspect]="1"
+      [round]="true"
+      [outputWidth]="400"
+      (cropped)="apply($event)"
+      (cancel)="cropSrc = null"
+    ></app-image-cropper>
   `,
 })
 export class PhotoUploadComponent extends FormControlBase<string | undefined> {
   @Input() name = "";
+  cropSrc: string | null = null;
 
   constructor(@Self() @Optional() ngControl: NgControl | null, private toast: ToastService) { super(ngControl); }
 
@@ -34,13 +47,18 @@ export class PhotoUploadComponent extends FormControlBase<string | undefined> {
     const input = e.target as HTMLInputElement;
     const f = input.files?.[0];
     if (!f) return;
-    if (f.size > 5 * 1024 * 1024) return this.toast.error("A imagem deve ter até 5MB.");
+    if (f.size > 10 * 1024 * 1024) return this.toast.error("A imagem deve ter até 10MB.");
     try {
-      this.update(await fileToDataUrl(f));
-      this.touch();
+      this.cropSrc = await readFileAsDataUrl(f);
     } catch {
       this.toast.error("Não foi possível carregar a imagem.");
     }
     input.value = "";
+  }
+
+  apply(dataUrl: string) {
+    this.update(dataUrl);
+    this.touch();
+    this.cropSrc = null;
   }
 }

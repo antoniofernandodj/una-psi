@@ -5,6 +5,10 @@ import { RequestsService } from "../../core/services/requests.service";
 import { ToastService } from "../../core/services/toast.service";
 import { REQUEST_STATUS_META } from "../../shared/constants";
 
+import { ChipTone } from "../../shared/components/chip.component";
+
+const STATUS_TONE: Record<RequestStatus, ChipTone> = { new: "primary", contacted: "secondary", scheduled: "tertiary", archived: "neutral" };
+
 type Filter = "all" | RequestStatus;
 
 @Component({
@@ -13,7 +17,7 @@ type Filter = "all" | RequestStatus;
     <div *ngIf="vm$ | async as vm" class="space-y-4">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div class="flex flex-wrap gap-2">
-          <app-chip *ngFor="let f of vm.filters" [interactive]="true" [selected]="f.id === filter$.value" (click)="filter$.next(f.id)">
+          <app-chip *ngFor="let f of vm.filters" [interactive]="true" [tone]="f.tone" [selected]="f.id === filter$.value" (click)="filter$.next(f.id)">
             {{ f.label }} ({{ f.count }})
           </app-chip>
         </div>
@@ -59,17 +63,18 @@ export class RequestsInboxComponent {
   editing: ContactRequest | null = null;
   notes = "";
 
-  vm$: Observable<{ filters: { id: Filter; label: string; count: number }[]; list: ContactRequest[] }> = combineLatest([
+  vm$: Observable<{ filters: { id: Filter; label: string; count: number; tone: ChipTone }[]; list: ContactRequest[] }> = combineLatest([
     this.requests$, this.filter$, this.query$,
   ]).pipe(
     map(([all, filter, query]) => {
       const active = all.filter((r) => r.status !== "archived");
       const filters = [
-        { id: "all" as Filter, label: "Ativas", count: active.length },
+        { id: "all" as Filter, label: "Ativas", count: active.length, tone: "dark" as ChipTone },
         ...(["new", "contacted", "scheduled", "archived"] as RequestStatus[]).map((s) => ({
           id: s as Filter,
           label: REQUEST_STATUS_META[s].label,
           count: all.filter((r) => r.status === s).length,
+          tone: STATUS_TONE[s],
         })),
       ];
       const q = query.trim().toLowerCase();

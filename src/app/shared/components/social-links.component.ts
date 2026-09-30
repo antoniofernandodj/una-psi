@@ -17,7 +17,8 @@ import { SOCIALS } from "../constants";
         [title]="l.label"
         class="w-9 h-9 rounded-full bg-surface-container text-secondary flex items-center justify-center hover:bg-secondary-fixed transition-colors"
       >
-        <app-icon [name]="l.icon" [size]="18"></app-icon>
+        <app-brand-icon *ngIf="l.brand; else generic" [name]="l.key" [size]="20"></app-brand-icon>
+        <ng-template #generic><app-icon [name]="l.icon" [size]="18"></app-icon></ng-template>
       </a>
     </div>
   `,
@@ -25,10 +26,12 @@ import { SOCIALS } from "../constants";
 export class SocialLinksComponent {
   @Input() set profile(p: PsychologistProfile) {
     this.links = SOCIALS.filter((s) => s.key !== "whatsapp" && p[s.key]).map((s) => ({
+      key: s.key,
       label: s.label,
       icon: s.icon,
+      brand: s.brand,
       url: socialUrl(s.key as any, p[s.key]!),
     }));
   }
-  links: { label: string; icon: string; url: string }[] = [];
+  links: { key: string; brand: boolean; label: string; icon: string; url: string }[] = [];
 }

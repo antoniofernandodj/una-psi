@@ -36,6 +36,10 @@ export abstract class CollectionStore<T extends Entity> {
     this.commit(this.items.filter((i) => i.id !== id));
   }
 
+  removeWhere(predicate: (item: T) => boolean): void {
+    this.commit(this.items.filter((i) => !predicate(i)));
+  }
+
   protected commit(items: T[]): void {
     this.storage.set(this.key, items);
     this.subject.next(items);

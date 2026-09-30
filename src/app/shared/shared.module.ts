@@ -3,6 +3,10 @@ import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 
+import { BrandIconComponent } from "./components/brand-icon.component";
+import { ImageCropperComponent } from "./components/image-cropper.component";
+import { ThemeToggleComponent } from "./components/theme-toggle.component";
+import { CoverUploadComponent } from "./components/form/cover-upload.component";
 import { AvatarComponent } from "./components/avatar.component";
 import { BadgeComponent } from "./components/badge.component";
 import { ButtonComponent } from "./components/button.component";
@@ -40,6 +44,7 @@ const COMPONENTS = [
   StatCardComponent, TabsComponent, ToastHostComponent,
   CheckboxComponent, ChipSelectComponent, FieldComponent, InputComponent, PhotoUploadComponent,
   SelectComponent, TagPickerComponent, TextareaComponent,
+  BrandIconComponent, ImageCropperComponent, ThemeToggleComponent, CoverUploadComponent,
 ];
 
 @NgModule({

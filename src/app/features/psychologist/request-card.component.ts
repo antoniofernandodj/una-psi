@@ -35,7 +35,7 @@ import { REQUEST_STATUS_META, REQUEST_STATUS_OPTIONS } from "../../shared/consta
         </div>
 
         <div class="flex flex-col gap-3 lg:w-64 shrink-0">
-          <app-button variant="whatsapp" icon="chat" [block]="true" [href]="whatsapp">Chamar no WhatsApp</app-button>
+          <app-button variant="whatsapp" brandIcon="whatsapp" [block]="true" [href]="whatsapp">Chamar no WhatsApp</app-button>
           <app-select [ngModel]="request.status" (ngModelChange)="statusChange.emit($event)" [options]="statusOptions"></app-select>
           <app-button variant="tonal" icon="edit_note" [block]="true" (click)="editNotes.emit()">Notas</app-button>
         </div>

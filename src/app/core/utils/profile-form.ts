@@ -10,6 +10,7 @@ export const SOCIAL_KEYS = ["whatsapp", "instagram", "facebook", "linkedin", "yo
 export function buildProfileGroup(fb: FormBuilder, p?: Partial<PsychologistProfile>): FormGroup {
   return fb.group({
     photo: [p?.photo],
+    cover: [p?.cover],
     crp: [p?.crp ?? "", [Validators.required, crpValidator]],
     sessionFee: [numberToCurrency(p?.sessionFee)],
     approachIds: [p?.approachIds ?? [], [Validators.required, maxItems(MAX_APPROACHES)]],
@@ -23,6 +24,7 @@ export function profileFromGroup(group: FormGroup): Omit<PsychologistProfile, "i
   const v = group.getRawValue();
   const profile: Omit<PsychologistProfile, "id"> = {
     photo: v.photo || undefined,
+    cover: v.cover || undefined,
     crp: v.crp,
     sessionFee: currencyToNumber(v.sessionFee),
     approachIds: v.approachIds,

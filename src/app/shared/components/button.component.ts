@@ -15,6 +15,7 @@ const VARIANTS: Record<ButtonVariant, string> = {
   selector: "app-button",
   template: `
     <ng-template #content>
+      <app-brand-icon *ngIf="brandIcon" [name]="brandIcon" [size]="size === 'sm' ? 18 : 20" [colored]="false"></app-brand-icon>
       <app-icon *ngIf="icon" [name]="icon" [size]="size === 'sm' ? 18 : 20"></app-icon>
       <ng-content></ng-content>
     </ng-template>
@@ -34,6 +35,8 @@ export class ButtonComponent {
   @Input() variant: ButtonVariant = "primary";
   @Input() size: "sm" | "md" | "lg" = "md";
   @Input() icon?: string;
+  /** logotipo de marca monocromático (herda a cor do texto) */
+  @Input() brandIcon?: string;
   @Input() type: "button" | "submit" = "button";
   @Input() disabled = false;
   @Input() href?: string;
