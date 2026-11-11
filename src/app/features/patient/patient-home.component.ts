@@ -1,6 +1,10 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { BehaviorSubject, combineLatest, map } from "rxjs";
+import { InterestsService } from "../../core/services/interests.service";
+import { PreferencesService } from "../../core/services/preferences.service";
+import { Compatibility, computeCompatibility } from "../../core/utils/compatibility";
+import { PreferencesChange } from "./compatibility-panel.component";
 import { AuthService } from "../../core/services/auth.service";
 import { EMPTY_FILTERS, PsychologistFilters, PsychologistsService } from "../../core/services/psychologists.service";
 import { RequestsService } from "../../core/services/requests.service";
@@ -16,6 +20,8 @@ import { ContactRequestData } from "./contact-request-form.component";
         <p class="text-body-md text-on-surface-variant">Filtre por especialidade, abordagem e valor da sessão.</p>
       </section>
 
+      <app-compatibility-panel [initial]="initialPrefs" [loggedIn]="!!vm.user" (changed)="onPrefs($event, vm.user?.id)"></app-compatibility-panel>
+
       <app-psychologist-filters (filtersChange)="filters$.next($event)"></app-psychologist-filters>
 
       <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -29,6 +35,7 @@ import { ContactRequestData } from "./contact-request-form.component";
             *ngFor="let p of vm.list"
             [view]="p"
             [selected]="p.user.id === vm.selected?.user?.id"
+            [match]="vm.matches[p.user.id]"
             (select)="open($event)"
           ></app-psychologist-card>
           <app-empty-state
@@ -45,7 +52,9 @@ import { ContactRequestData } from "./contact-request-form.component";
             *ngIf="vm.selected; else placeholder"
             [view]="vm.selected"
             [currentUser]="vm.user"
+            [match]="vm.matches[vm.selected.user.id]"
             (request)="send(vm.selected.user.id, vm.user?.id, $event)"
+            (interest)="registerInterest(vm.selected.user.id, vm.user?.id, $event)"
           ></app-psychologist-detail>
           <ng-template #placeholder>
             <app-card>
@@ -61,18 +70,37 @@ export class PatientHomeComponent {
   filters$ = new BehaviorSubject<PsychologistFilters>(EMPTY_FILTERS);
   private selectedId$ = this.route.queryParamMap.pipe(map((q) => q.get("p")));
 
-  vm$ = combineLatest([this.service.all$, this.filters$, this.selectedId$, this.auth.currentUser$]).pipe(
-    map(([all, filters, id, user]) => ({
-      total: all.length,
-      list: this.service.filter(all, filters),
-      selected: all.find((p) => p.user.id === id),
-      user: user?.role === "patient" ? user : null,
-    })),
+  initialPrefs = this.prefsService.get(this.auth.currentUser?.id);
+  private prefs$ = new BehaviorSubject<PreferencesChange>({
+    prefs: { specialtyIds: this.initialPrefs?.specialtyIds ?? [], approachIds: this.initialPrefs?.approachIds ?? [], maxFee: this.initialPrefs?.maxFee },
+    onlyCompatible: false,
+  });
+
+  vm$ = combineLatest([this.service.all$, this.filters$, this.selectedId$, this.auth.currentUser$, this.prefs$]).pipe(
+    map(([all, filters, id, user, { prefs, onlyCompatible }]) => {
+      const matches: Record<string, Compatibility | null> = {};
+      all.forEach((p) => (matches[p.user.id] = computeCompatibility(prefs, p)));
+      const score = (id: string) => matches[id]?.score ?? 0;
+      let list = this.service.filter(all, filters);
+      if (onlyCompatible) list = list.filter((p) => (matches[p.user.id]?.score ?? 100) >= 50);
+      if (Object.values(matches).some(Boolean)) {
+        list = [...list].sort((a, b) => score(b.user.id) - score(a.user.id) || Number(!!a.profile.agendaFull) - Number(!!b.profile.agendaFull));
+      }
+      return {
+        total: all.length,
+        list,
+        matches,
+        selected: all.find((p) => p.user.id === id),
+        user: user?.role === "patient" ? user : null,
+      };
+    }),
   );
 
   constructor(
     private service: PsychologistsService,
     private requests: RequestsService,
+    private interests: InterestsService,
+    private prefsService: PreferencesService,
     private auth: AuthService,
     private route: ActivatedRoute,
     private router: Router,
@@ -81,6 +109,16 @@ export class PatientHomeComponent {
 
   open(id: string | null) {
     this.router.navigate([], { queryParams: { p: id }, queryParamsHandling: "merge" });
+  }
+
+  onPrefs(change: PreferencesChange, userId?: string) {
+    this.prefs$.next(change);
+    if (userId) this.prefsService.save(userId, change.prefs);
+  }
+
+  registerInterest(psychologistId: string, patientId: string | undefined, data: ContactRequestData) {
+    this.interests.create({ psychologistId, patientId, ...data });
+    this.toast.success("Interesse registrado! Avisaremos o profissional que você está na lista de espera.");
   }
 
   send(psychologistId: string, patientId: string | undefined, data: ContactRequestData) {

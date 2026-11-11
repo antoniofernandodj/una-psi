@@ -23,6 +23,8 @@ export class RequestsService {
 
   update(id: string, patch: Partial<Pick<ContactRequest, "status" | "notes">>): void {
     const current = this.store.find(id);
-    if (current) this.store.upsert({ ...current, ...patch });
+    if (!current) return;
+    const leavingNew = current.status === "new" && patch.status && patch.status !== "new";
+    this.store.upsert({ ...current, ...patch, respondedAt: current.respondedAt ?? (leavingNew ? new Date().toISOString() : undefined) });
   }
 }

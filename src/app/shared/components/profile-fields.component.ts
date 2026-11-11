@@ -40,6 +40,12 @@ import { SOCIALS } from "../constants";
             mask="currency"
             hint="Opcional — deixe em branco para combinar diretamente ou oferecer valor social."
           ></app-input>
+          <div class="rounded-xl bg-surface-container-lowest p-4 ring-1 ring-outline-variant/30">
+            <app-checkbox formControlName="agendaFull">
+              <strong class="text-on-surface">Agenda lotada</strong><br />
+              Pacientes verão o aviso e poderão registrar interesse em vagas futuras.
+            </app-checkbox>
+          </div>
         </div>
 
         <div class="lg:col-span-8 space-y-6">

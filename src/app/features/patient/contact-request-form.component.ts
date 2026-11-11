@@ -25,12 +25,14 @@ export interface ContactRequestData {
       </div>
       <app-textarea
         formControlName="message"
-        label="Como podemos ajudar?"
+        [label]="interest ? 'Conte um pouco sobre o que você procura' : 'Como podemos ajudar?'"
         placeholder="Conte brevemente o que motiva a busca por terapia..."
         [rows]="4"
         [maxlength]="600"
       ></app-textarea>
-      <app-button type="submit" icon="send" [block]="true" size="lg">Enviar solicitação de contato</app-button>
+      <app-button type="submit" [icon]="interest ? 'notifications_active' : 'send'" [block]="true" size="lg">
+        {{ interest ? "Entrar na lista de espera" : "Enviar solicitação de contato" }}
+      </app-button>
     </form>
   `,
 })
@@ -38,6 +40,8 @@ export class ContactRequestFormComponent {
   @Input() set user(u: User | null) {
     if (u && !this.form.dirty) this.form.patchValue({ name: u.name, email: u.email, phone: maskPhone(u.phone) });
   }
+  /** modo "interesse em vagas futuras" (agenda lotada) */
+  @Input() interest = false;
   @Output() send = new EventEmitter<ContactRequestData>();
 
   form = this.fb.group({

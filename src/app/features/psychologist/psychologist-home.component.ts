@@ -1,7 +1,8 @@
 import { Component } from "@angular/core";
 import { combineLatest, filter, map, of, switchMap } from "rxjs";
-import { ContactRequest } from "../../core/models";
+import { ContactRequest, FutureInterest } from "../../core/models";
 import { AuthService } from "../../core/services/auth.service";
+import { InterestsService } from "../../core/services/interests.service";
 import { PsychologistsService } from "../../core/services/psychologists.service";
 import { RequestsService } from "../../core/services/requests.service";
 import { TabItem } from "../../shared/components/tabs.component";
@@ -21,17 +22,24 @@ import { TabItem } from "../../shared/components/tabs.component";
               <h1 class="text-headline-md">{{ vm.view.user.name }}</h1>
               <div class="flex flex-wrap items-center gap-2 mt-1">
                 <app-badge tone="tertiary" icon="verified">CRP {{ vm.view.profile.crp }}</app-badge>
+                <app-badge *ngIf="vm.view.profile.agendaFull" tone="warning" icon="event_busy">Agenda lotada</app-badge>
                 <span class="text-body-sm text-on-surface-variant">{{ vm.approaches }}</span>
               </div>
+              <app-activity-info class="block mt-1" [responseMs]="vm.view.avgResponseMs"></app-activity-info>
+              <p *ngIf="vm.stale" class="flex items-center gap-1 text-label-sm text-error mt-1">
+                <app-icon name="warning" [size]="14"></app-icon>
+                {{ vm.stale }} {{ vm.stale === 1 ? "solicitação sem resposta há" : "solicitações sem resposta há" }} mais de 48h
+              </p>
             </div>
           </div>
           <app-button variant="tonal" icon="visibility" [link]="['/paciente']" [queryParams]="{ p: vm.view.user.id }">Pré-visualizar perfil</app-button>
         </div>
       </app-card>
 
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
         <app-stat-card label="Novas solicitações" [value]="vm.counts.new" icon="person_add" tone="primary"></app-stat-card>
         <app-stat-card label="Em andamento" [value]="vm.counts.active" icon="groups" tone="secondary"></app-stat-card>
+        <app-stat-card label="Lista de espera" [value]="vm.waiting" icon="hourglass_top" tone="secondary"></app-stat-card>
         <app-stat-card label="Total recebidas" [value]="vm.counts.total" icon="forum" tone="tertiary"></app-stat-card>
         <app-stat-card label="Perfil completo" [value]="vm.completeness + '%'" icon="account_circle" tone="neutral"></app-stat-card>
       </div>
@@ -48,6 +56,12 @@ import { TabItem } from "../../shared/components/tabs.component";
         [requests]="vm.requests"
         [psychologistName]="vm.view.user.name"
       ></app-requests-inbox>
+      <app-interests-list
+        *ngIf="tab === 'interests'"
+        [interests]="vm.interests"
+        [agendaFull]="!!vm.view.profile.agendaFull"
+        [psychologistName]="vm.view.user.name"
+      ></app-interests-list>
       <app-profile-editor *ngIf="tab === 'profile'" [user]="vm.view.user" [profileData]="vm.view.profile"></app-profile-editor>
     </div>
   `,
@@ -58,22 +72,28 @@ export class PsychologistHomeComponent {
   vm$ = this.auth.currentUser$.pipe(
     switchMap((user) =>
       user
-        ? combineLatest([this.psychologists.view$(user.id), this.requestsService.forPsychologist$(user.id)])
-        : of([undefined, []] as [undefined, ContactRequest[]]), // sessão encerrada (ex.: perfil apagado)
+        ? combineLatest([this.psychologists.view$(user.id), this.requestsService.forPsychologist$(user.id), this.interestsService.forPsychologist$(user.id)])
+        : of([undefined, [], []] as [undefined, ContactRequest[], FutureInterest[]]), // sessão encerrada (ex.: perfil apagado)
     ),
     filter(([view]) => !!view),
-    map(([view, requests]) => {
+    map(([view, requests, interests]) => {
       const v = view!;
       const p = v.profile;
       const checks = [p.photo, p.crp, p.approachIds.length, p.specialtyIds.length, p.bio, p.sessionFee != null, p.whatsapp || p.instagram || p.linkedin];
       const newCount = requests.filter((r) => r.status === "new").length;
+      const waiting = interests.filter((i) => i.status === "waiting").length;
+      const stale = requests.filter((r) => r.status === "new" && Date.now() - Date.parse(r.createdAt) > 48 * 3_600_000).length;
       const tabs: TabItem[] = [
         { id: "requests", label: "Solicitações de pacientes", icon: "inbox", badge: newCount },
+        { id: "interests", label: "Lista de espera", icon: "hourglass_top", badge: waiting },
         { id: "profile", label: "Dados profissionais e perfil público", icon: "account_box" },
       ];
       return {
         view: v,
         requests,
+        interests,
+        waiting,
+        stale,
         tabs,
         approaches: v.approaches.map((a) => a.name).join(" • "),
         completeness: Math.round((checks.filter(Boolean).length / checks.length) * 100),
@@ -90,5 +110,6 @@ export class PsychologistHomeComponent {
     private auth: AuthService,
     private psychologists: PsychologistsService,
     private requestsService: RequestsService,
+    private interestsService: InterestsService,
   ) {}
 }

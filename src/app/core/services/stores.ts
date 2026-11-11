@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Approach, ContactRequest, PsychologistProfile, Specialty, User } from "../models";
+import { Approach, ContactRequest, FutureInterest, PatientPreferences, PsychologistProfile, Specialty, User } from "../models";
 import { CollectionStore } from "./collection-store";
 import { StorageService } from "./storage.service";
 
@@ -26,4 +26,14 @@ export class SpecialtiesStore extends CollectionStore<Specialty> {
 @Injectable({ providedIn: "root" })
 export class RequestsStore extends CollectionStore<ContactRequest> {
   constructor(s: StorageService) { super(s, "unapsi.requests"); }
+}
+
+@Injectable({ providedIn: "root" })
+export class InterestsStore extends CollectionStore<FutureInterest> {
+  constructor(s: StorageService) { super(s, "unapsi.interests"); }
+}
+
+@Injectable({ providedIn: "root" })
+export class PreferencesStore extends CollectionStore<PatientPreferences> {
+  constructor(s: StorageService) { super(s, "unapsi.preferences"); }
 }

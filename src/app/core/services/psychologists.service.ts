@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { combineLatest, map, Observable } from "rxjs";
-import { PsychologistProfile, PsychologistView } from "../models";
-import { ApproachesStore, ProfilesStore, SpecialtiesStore, UsersStore } from "./stores";
+import { ContactRequest, PsychologistProfile, PsychologistView } from "../models";
+import { ApproachesStore, ProfilesStore, RequestsStore, SpecialtiesStore, UsersStore } from "./stores";
 
 export interface PsychologistFilters {
   search: string;
@@ -10,6 +10,7 @@ export interface PsychologistFilters {
   minFee: number | null;
   maxFee: number | null;
   includeNoFee: boolean;
+  hideFullAgenda: boolean;
 }
 
 export const EMPTY_FILTERS: PsychologistFilters = {
@@ -19,7 +20,16 @@ export const EMPTY_FILTERS: PsychologistFilters = {
   minFee: null,
   maxFee: null,
   includeNoFee: true,
+  hideFullAgenda: false,
 };
+
+function averageResponseMs(requests: ContactRequest[]): number | undefined {
+  const times = requests
+    .filter((r) => r.respondedAt)
+    .map((r) => Date.parse(r.respondedAt!) - Date.parse(r.createdAt))
+    .filter((t) => t >= 0);
+  return times.length ? times.reduce((a, b) => a + b, 0) / times.length : undefined;
+}
 
 const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 
@@ -30,8 +40,9 @@ export class PsychologistsService {
     this.profiles.items$,
     this.approaches.items$,
     this.specialties.items$,
+    this.requests.items$,
   ]).pipe(
-    map(([users, profiles, approaches, specialties]) =>
+    map(([users, profiles, approaches, specialties, requests]) =>
       users
         .filter((u) => u.role === "psychologist")
         .flatMap((user) => {
@@ -43,6 +54,7 @@ export class PsychologistsService {
               profile,
               approaches: approaches.filter((a) => profile.approachIds.includes(a.id)),
               specialties: specialties.filter((s) => profile.specialtyIds.includes(s.id)),
+              avgResponseMs: averageResponseMs(requests.filter((r) => r.psychologistId === user.id)),
             },
           ];
         })
@@ -55,6 +67,7 @@ export class PsychologistsService {
     private profiles: ProfilesStore,
     private approaches: ApproachesStore,
     private specialties: SpecialtiesStore,
+    private requests: RequestsStore,
   ) {}
 
   view$(id: string | null): Observable<PsychologistView | undefined> {
@@ -64,6 +77,7 @@ export class PsychologistsService {
   filter(list: PsychologistView[], f: PsychologistFilters): PsychologistView[] {
     const q = norm(f.search.trim());
     return list.filter(({ user, profile, approaches, specialties }) => {
+      if (f.hideFullAgenda && profile.agendaFull) return false;
       if (f.specialtyId && !profile.specialtyIds.includes(f.specialtyId)) return false;
       if (f.approachId && !profile.approachIds.includes(f.approachId)) return false;
       if (q) {

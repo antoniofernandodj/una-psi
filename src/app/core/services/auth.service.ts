@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, combineLatest, map, Observable } from "rxjs";
 import { PsychologistProfile, Role, User } from "../models";
-import { ProfilesStore, RequestsStore, UsersStore } from "./stores";
+import { InterestsStore, PreferencesStore, ProfilesStore, RequestsStore, UsersStore } from "./stores";
 import { StorageService } from "./storage.service";
 
 export type RegisterData = Omit<User, "id" | "createdAt"> & {
@@ -22,7 +22,11 @@ export class AuthService {
     private users: UsersStore,
     private profiles: ProfilesStore,
     private requests: RequestsStore,
-  ) {}
+    private interests: InterestsStore,
+    private preferences: PreferencesStore,
+  ) {
+    this.touchLastSeen(this.sessionId$.value);
+  }
 
   get currentUser(): User | null {
     return this.users.find(this.sessionId$.value) ?? null;
@@ -63,6 +67,8 @@ export class AuthService {
     this.logout();
     this.profiles.remove(user.id);
     this.requests.removeWhere((r) => r.psychologistId === user.id);
+    this.interests.removeWhere((i) => i.psychologistId === user.id);
+    this.preferences.remove(user.id);
     this.users.remove(user.id);
   }
 
@@ -77,6 +83,15 @@ export class AuthService {
 
   private startSession(id: string, remember: boolean): void {
     this.storage.set(this.SESSION_KEY, id, remember);
+    this.touchLastSeen(id, true);
     this.sessionId$.next(id);
+  }
+
+  /** Registra o último acesso (no máximo a cada 10 min, exceto em novo login). */
+  private touchLastSeen(id: string | null, force = false): void {
+    const user = this.users.find(id);
+    if (!user) return;
+    const last = user.lastSeenAt ? Date.parse(user.lastSeenAt) : 0;
+    if (force || Date.now() - last > 10 * 60_000) this.users.upsert({ ...user, lastSeenAt: new Date().toISOString() });
   }
 }

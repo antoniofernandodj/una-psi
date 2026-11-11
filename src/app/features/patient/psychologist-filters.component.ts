@@ -25,6 +25,7 @@ import { currencyToNumber } from "../../core/utils/masks";
           <app-checkbox formControlName="includeNoFee">
             Mostrar também psicólogos sem valor informado (valor social / a combinar)
           </app-checkbox>
+          <app-checkbox formControlName="hideFullAgenda">Ocultar agenda lotada</app-checkbox>
         </div>
         <div class="flex flex-wrap items-center justify-end gap-3">
           <app-button variant="ghost" size="sm" icon="filter_alt_off" (click)="reset()">Limpar filtros</app-button>
@@ -44,6 +45,7 @@ export class PsychologistFiltersComponent {
     minFee: [""],
     maxFee: [""],
     includeNoFee: [true],
+    hideFullAgenda: [false],
   });
 
   specialtyOptions$ = this.catalog.activeSpecialties$.pipe(map((l) => l.map((s) => ({ value: s.id, label: s.name }))));
@@ -65,11 +67,12 @@ export class PsychologistFiltersComponent {
       minFee: currencyToNumber(v.minFee) ?? null,
       maxFee: currencyToNumber(v.maxFee) ?? null,
       includeNoFee: !!v.includeNoFee,
+      hideFullAgenda: !!v.hideFullAgenda,
     });
   }
 
   reset() {
-    this.form.reset({ search: "", specialtyId: "", approachId: "", minFee: "", maxFee: "", includeNoFee: EMPTY_FILTERS.includeNoFee });
+    this.form.reset({ search: "", specialtyId: "", approachId: "", minFee: "", maxFee: "", includeNoFee: EMPTY_FILTERS.includeNoFee, hideFullAgenda: false });
     this.apply();
   }
 }

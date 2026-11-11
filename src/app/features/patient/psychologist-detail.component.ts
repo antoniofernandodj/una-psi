@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { PsychologistView, User } from "../../core/models";
+import { Compatibility } from "../../core/utils/compatibility";
 import { whatsappUrl } from "../../core/utils/misc";
 import { ContactRequestData } from "./contact-request-form.component";
 
@@ -22,9 +23,13 @@ const TRUST_POINTS = [
           <div class="flex items-end gap-4">
             <app-avatar class="ring-4 ring-surface-container-lowest rounded-full" [src]="view.profile.photo" [name]="view.user.name" [size]="110"></app-avatar>
             <div>
-              <app-badge tone="tertiary" icon="verified_user">CRP {{ view.profile.crp }}</app-badge>
+              <div class="flex flex-wrap items-center gap-1.5">
+                <app-badge tone="tertiary" icon="verified_user">CRP {{ view.profile.crp }}</app-badge>
+                <app-badge *ngIf="view.profile.agendaFull" tone="warning" icon="event_busy">Agenda lotada</app-badge>
+              </div>
               <h1 class="text-headline-md text-on-surface">{{ view.user.name }}</h1>
               <p class="text-label-lg text-secondary">{{ approachNames }}</p>
+              <app-activity-info class="block mt-1" [lastSeenAt]="view.user.lastSeenAt" [responseMs]="view.avgResponseMs"></app-activity-info>
             </div>
           </div>
           <div *ngIf="view.profile.sessionFee != null" class="rounded-2xl bg-surface-container-low px-5 py-3 text-right">
@@ -32,6 +37,18 @@ const TRUST_POINTS = [
             <app-price [fee]="view.profile.sessionFee"></app-price>
           </div>
         </header>
+
+        <section *ngIf="match" class="rounded-2xl bg-surface-container-low p-5 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <h4 class="text-title-md">Compatibilidade com o que você procura</h4>
+            <app-match-badge [match]="match"></app-match-badge>
+          </div>
+          <ul class="space-y-1.5 text-body-sm text-on-surface-variant">
+            <li *ngFor="let r of match.reasons" class="flex items-start gap-2">
+              <span aria-hidden="true">{{ r.ok === true ? "✅" : r.ok === "partial" ? "🟡" : "➖" }}</span>{{ r.text }}
+            </li>
+          </ul>
+        </section>
 
         <div class="space-y-4">
           <app-button variant="whatsapp" size="lg" brandIcon="whatsapp" [block]="true" [href]="whatsapp">Conversar via WhatsApp</app-button>
@@ -59,7 +76,7 @@ const TRUST_POINTS = [
           </div>
         </div>
 
-        <section class="rounded-2xl bg-surface-container-low p-5 sm:p-6">
+        <section *ngIf="!view.profile.agendaFull" class="rounded-2xl bg-surface-container-low p-5 sm:p-6">
           <div class="flex items-start gap-3 mb-5">
             <span class="w-10 h-10 rounded-xl bg-primary-fixed text-primary flex items-center justify-center shrink-0"><app-icon name="mail"></app-icon></span>
             <div>
@@ -69,6 +86,17 @@ const TRUST_POINTS = [
           </div>
           <app-contact-request-form [user]="currentUser" (send)="request.emit($event)"></app-contact-request-form>
         </section>
+
+        <section *ngIf="view.profile.agendaFull" class="rounded-2xl bg-amber-50 ring-1 ring-amber-200 p-5 sm:p-6">
+          <div class="flex items-start gap-3 mb-5">
+            <span class="w-10 h-10 rounded-xl bg-amber-100 text-amber-900 flex items-center justify-center shrink-0"><app-icon name="event_busy"></app-icon></span>
+            <div>
+              <h3 class="text-title-md text-amber-950">Agenda lotada no momento</h3>
+              <p class="text-body-sm text-amber-900">{{ view.user.name }} não tem vagas agora. Cadastre seu interesse e seja avisado(a) quando abrir uma vaga.</p>
+            </div>
+          </div>
+          <app-contact-request-form [interest]="true" [user]="currentUser" (send)="interest.emit($event)"></app-contact-request-form>
+        </section>
       </div>
     </app-card>
   `,
@@ -76,7 +104,9 @@ const TRUST_POINTS = [
 export class PsychologistDetailComponent {
   @Input() view!: PsychologistView;
   @Input() currentUser: User | null = null;
+  @Input() match: Compatibility | null = null;
   @Output() request = new EventEmitter<ContactRequestData>();
+  @Output() interest = new EventEmitter<ContactRequestData>();
   trust = TRUST_POINTS;
 
   get approachNames() { return this.view.approaches.map((a) => a.name).join(" • "); }
