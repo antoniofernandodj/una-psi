@@ -24,7 +24,7 @@ export interface PreferencesChange {
             <span class="whitespace-nowrap">💚 alta</span> · <span class="whitespace-nowrap">💛 boa</span> · <span class="whitespace-nowrap">🤍 parcial</span>.
           </p>
         </div>
-        <app-button variant="ghost" size="sm" [icon]="open ? 'expand_less' : 'expand_more'" (click)="open = !open">{{ open ? "Recolher" : "Editar" }}</app-button>
+        <app-button variant="ghost" size="sm" [icon]="open ? 'expand_less' : 'expand_more'" (click)="open = !open">{{ open ? "Recolher" : "Filtros" }}</app-button>
       </div>
 
       <form *ngIf="open" [formGroup]="form" class="space-y-5 mt-5">
