@@ -14,6 +14,7 @@ import { FormControlBase } from "./form-control-base";
           type="search"
           [placeholder]="placeholder"
           [(ngModel)]="query"
+          (ngModelChange)="visible = pageSize"
           [ngModelOptions]="{ standalone: true }"
           class="w-full pl-11 pr-4 py-3 bg-surface-container-lowest text-body-md rounded-xl shadow-sm ring-1 ring-outline-variant/40 focus:outline-none focus:ring-2 focus:ring-secondary"
         />
@@ -26,16 +27,22 @@ import { FormControlBase } from "./form-control-base";
         </div>
       </div>
 
-      <div class="flex flex-wrap gap-2 max-h-40 overflow-y-auto">
-        <app-chip *ngFor="let o of available" [interactive]="true" (click)="add(o.value)">+ {{ o.label }}</app-chip>
+      <div class="flex flex-wrap gap-2">
+        <app-chip *ngFor="let o of shown" [interactive]="true" (click)="add(o.value)">+ {{ o.label }}</app-chip>
         <p *ngIf="!available.length" class="text-body-sm text-on-surface-variant">Nenhum resultado.</p>
       </div>
+      <app-button *ngIf="hidden > 0" class="inline-block mt-2" variant="ghost" size="sm" icon="add" (click)="visible = visible + pageSize">
+        Mais opções ({{ hidden }})
+      </app-button>
     </app-field>
   `,
 })
 export class TagPickerComponent extends FormControlBase<string[]> {
   @Input() options: SelectOption[] = [];
   @Input() placeholder = "Buscar...";
+  /** quantidade de opções exibidas por vez; "Mais opções" revela mais {pageSize} */
+  readonly pageSize = 6;
+  visible = 6;
   query = "";
   constructor(@Self() @Optional() ngControl: NgControl | null) { super(ngControl); }
 
@@ -44,8 +51,10 @@ export class TagPickerComponent extends FormControlBase<string[]> {
   get selected() { return this.options.filter((o) => this.value?.includes(o.value)); }
   get available() {
     const q = this.norm(this.query);
-    return this.options.filter((o) => !this.value?.includes(o.value) && this.norm(o.label).includes(q)).slice(0, 40);
+    return this.options.filter((o) => !this.value?.includes(o.value) && this.norm(o.label).includes(q));
   }
+  get shown() { return this.available.slice(0, this.visible); }
+  get hidden() { return Math.max(0, this.available.length - this.visible); }
 
   add(v: string) { this.update([...(this.value ?? []), v]); this.touch(); }
   remove(v: string) { this.update((this.value ?? []).filter((x) => x !== v)); this.touch(); }
