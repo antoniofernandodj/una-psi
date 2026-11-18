@@ -33,6 +33,10 @@ export interface PsychologistProfile extends Entity {
   sessionFee?: number;
   /** agenda lotada: não há vagas no momento; pacientes podem registrar interesse */
   agendaFull?: boolean;
+  /** promoção ligada: a política é exibida em destaque na listagem e no perfil */
+  promoActive?: boolean;
+  /** descrição da política da promoção (ex.: "1ª sessão com 50% de desconto") */
+  promoPolicy?: string;
   bio?: string;
   whatsapp?: string;
   instagram?: string;

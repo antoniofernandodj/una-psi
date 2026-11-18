@@ -21,6 +21,12 @@ export function matchesControl(other: string): ValidatorFn {
     c.parent && c.value !== c.parent.get(other)?.value ? { mismatch: true } : null;
 }
 
+/** Obrigatório apenas quando o controle irmão `flag` estiver ligado. */
+export function requiredIf(flag: string): ValidatorFn {
+  return (c: AbstractControl): ValidationErrors | null =>
+    c.parent?.get(flag)?.value && !String(c.value ?? "").trim() ? { required: true } : null;
+}
+
 export function maxItems(max: number): ValidatorFn {
   return (c: AbstractControl): ValidationErrors | null =>
     Array.isArray(c.value) && c.value.length > max ? { maxItems: { max } } : null;

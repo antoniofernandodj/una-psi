@@ -24,6 +24,7 @@ import { ModalComponent } from "./components/modal.component";
 import { PasswordMeterComponent } from "./components/password-meter.component";
 import { ProfileFieldsComponent } from "./components/profile-fields.component";
 import { PriceComponent } from "./components/price.component";
+import { PromoHighlightComponent } from "./components/promo-highlight.component";
 import { SectionTitleComponent } from "./components/section-title.component";
 import { SegmentedComponent } from "./components/segmented.component";
 import { SocialLinksComponent } from "./components/social-links.component";
@@ -46,7 +47,7 @@ const COMPONENTS = [
   StatCardComponent, TabsComponent, ToastHostComponent,
   CheckboxComponent, ChipSelectComponent, FieldComponent, InputComponent, PhotoUploadComponent,
   SelectComponent, TagPickerComponent, TextareaComponent,
-  ActivityInfoComponent, MatchBadgeComponent,
+  ActivityInfoComponent, MatchBadgeComponent, PromoHighlightComponent,
   BrandIconComponent, ImageCropperComponent, ThemeToggleComponent, CoverUploadComponent,
 ];
 

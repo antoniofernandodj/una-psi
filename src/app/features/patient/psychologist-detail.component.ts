@@ -38,6 +38,8 @@ const TRUST_POINTS = [
           </div>
         </header>
 
+        <app-promo-highlight class="block" [profile]="view.profile"></app-promo-highlight>
+
         <section *ngIf="match" class="rounded-2xl bg-surface-container-low p-5 space-y-3">
           <div class="flex flex-wrap items-center justify-between gap-2">
             <h4 class="text-title-md">Compatibilidade com o que você procura</h4>

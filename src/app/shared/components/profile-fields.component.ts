@@ -2,7 +2,7 @@ import { Component, Input } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { map } from "rxjs";
 import { CatalogService } from "../../core/services/catalog.service";
-import { MAX_APPROACHES } from "../../core/utils/profile-form";
+import { MAX_APPROACHES, MAX_PROMO_POLICY } from "../../core/utils/profile-form";
 import { SOCIALS } from "../constants";
 
 /** Campos do perfil profissional do psicólogo (cadastro e painel). */
@@ -45,6 +45,21 @@ import { SOCIALS } from "../constants";
               <strong class="text-on-surface">Agenda lotada</strong><br />
               Pacientes verão o aviso e poderão registrar interesse em vagas futuras.
             </app-checkbox>
+          </div>
+          <div class="rounded-xl bg-surface-container-lowest p-4 ring-1 ring-outline-variant/30 space-y-4">
+            <app-checkbox formControlName="promoActive">
+              <strong class="text-on-surface">Promoção ativa</strong><br />
+              A política da promoção aparece em destaque na listagem de psicólogos e no seu perfil.
+            </app-checkbox>
+            <app-textarea
+              *ngIf="group.get('promoActive')?.value"
+              formControlName="promoPolicy"
+              label="Política da promoção"
+              placeholder="Ex.: 1ª sessão com 50% de desconto para novos pacientes até 31/12."
+              hint="Descreva condições, prazo e para quem vale."
+              [rows]="3"
+              [maxlength]="maxPromoPolicy"
+            ></app-textarea>
           </div>
         </div>
 
@@ -94,6 +109,7 @@ export class ProfileFieldsComponent {
   @Input() name = "";
   socials = SOCIALS;
   maxApproaches = MAX_APPROACHES;
+  maxPromoPolicy = MAX_PROMO_POLICY;
 
   approachOptions$ = this.catalog.activeApproaches$.pipe(map((l) => l.map((a) => ({ value: a.id, label: a.name }))));
   specialtyOptions$ = this.catalog.activeSpecialties$.pipe(map((l) => l.map((s) => ({ value: s.id, label: s.name }))));

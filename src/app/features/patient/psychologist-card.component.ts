@@ -25,6 +25,8 @@ const VISIBLE_TAGS = 3;
         </div>
       </div>
 
+      <app-promo-highlight class="block mt-3" [profile]="view.profile" [compact]="true"></app-promo-highlight>
+
       <div *ngIf="match" class="mt-3"><app-match-badge [match]="match"></app-match-badge></div>
 
       <p *ngIf="view.profile.bio" class="text-body-sm text-on-surface-variant mt-3 line-clamp-2">{{ view.profile.bio }}</p>

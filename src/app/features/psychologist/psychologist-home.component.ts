@@ -23,6 +23,7 @@ import { TabItem } from "../../shared/components/tabs.component";
               <div class="flex flex-wrap items-center gap-2 mt-1">
                 <app-badge tone="tertiary" icon="verified">CRP {{ vm.view.profile.crp }}</app-badge>
                 <app-badge *ngIf="vm.view.profile.agendaFull" tone="warning" icon="event_busy">Agenda lotada</app-badge>
+                <app-badge *ngIf="vm.view.profile.promoActive" tone="secondary" icon="local_offer">Promoção ativa</app-badge>
                 <span class="text-body-sm text-on-surface-variant">{{ vm.approaches }}</span>
               </div>
               <app-activity-info class="block mt-1" [responseMs]="vm.view.avgResponseMs"></app-activity-info>
